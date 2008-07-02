@@ -15,30 +15,30 @@
 // message - confirmation message for form submit hook (default: "Please confirm:")
 // method - AJAX method to use for loading remote content (default: GET)
 // (any leftover options - e.g. 'clone' - will be passed onto the boxy constructor)
-$.fn.boxy = function(options) {
-    options = $.extend({single: true}, options || {});
+jQuery.fn.boxy = function(options) {
+    options = jQuery.extend({single: true}, options || {});
     this.each(function() {      
         var node = this.nodeName.toLowerCase(), self = this;
         if (node == 'a') {
-            $(this).click(function() {
+            jQuery(this).click(function() {
                 var anchor = this,
                     href = this.getAttribute('href'),
-                    realOpts = $.extend(options, {title: this.title});
+                    realOpts = jQuery.extend(options, {title: this.title});
                     
                 var loadContent = function(after) {
                     if (Boxy.cache[href]) {
                         after(Boxy.cache[href].clone());   
                     } else if (href.indexOf('#') === 0) {
-                        Boxy.cache[href] = $(href).remove();
+                        Boxy.cache[href] = jQuery(href).remove();
                         after(Boxy.cache[href].clone());
                     } else { // fall back to AJAX; could do with a same-origin check
-                        $.ajax({
+                        jQuery.ajax({
                             url: anchor.href,
                             method: options.method || 'GET',
                             dataType: 'html',
                             data: {__math__: Math.random()},
                             success: function(data) {
-                                data = $(data);
+                                data = jQuery(data);
                                 if (options.cache) {
                                     Boxy.cache[href] = data;
                                     data = data.clone();
@@ -50,23 +50,23 @@ $.fn.boxy = function(options) {
                 };
                 
                 var active;
-                if (options.single && (active = $.data(this, 'active.boxy'))) {
+                if (options.single && (active = jQuery.data(this, 'active.boxy'))) {
                     loadContent(function(content) {
                         active.setContent(content).center().show();     
                     });
                 } else {
                     loadContent(function(content) {
-                        $.data(anchor, 'active.boxy', new Boxy(content, realOpts));     
+                        jQuery.data(anchor, 'active.boxy', new Boxy(content, realOpts));     
                     });
                 }
                 
                 return false;
             });
         } else if (node == 'form') {
-            $(this).bind('submit.boxy', function() {
+            jQuery(this).bind('submit.boxy', function() {
                 Boxy.ask(options.message || 'Please confirm:', ['OK', 'Cancel'], function(v) {
                     if (v == 'OK') {
-                        $(self).unbind('submit.boxy').submit();
+                        jQuery(self).unbind('submit.boxy').submit();
                     }
                 }, {modal: true, closeable: false});
                 return false;
@@ -80,17 +80,17 @@ $.fn.boxy = function(options) {
 
 function Boxy(element, options) {
     
-    this.boxy = $(this.WRAPPER);
-    $.data(this.boxy[0], 'boxy', this);
+    this.boxy = jQuery(this.WRAPPER);
+    jQuery.data(this.boxy[0], 'boxy', this);
     
     this.visible = false;
-    this.options = $.extend({
+    this.options = jQuery.extend({
         title: null, closeable: true, draggable: true, clone: false,
         center: true, show: true, modal: false
     }, options || {});
     
     if (this.options.modal) {
-        this.options = $.extend(this.options, {center: true, draggable: false});
+        this.options = jQuery.extend(this.options, {center: true, draggable: false});
     }
     
     this.setContent(element || "<div></div>");
@@ -113,7 +113,7 @@ function Boxy(element, options) {
 
 };
 
-$.extend(Boxy, {
+jQuery.extend(Boxy, {
     DEFAULT_X:          50,
     DEFAULT_Y:          50,
     cache:              {},
@@ -126,8 +126,8 @@ $.extend(Boxy, {
     // this returns the actual instance of the boxy 'class', not just a DOM element.
     // Boxy.get(this).hide() would be valid, for instance.
     get: function(ele) {
-        var p = $(ele).parents('.boxy-wrapper');
-        return p.length ? $.data(p[0], 'boxy') : null;
+        var p = jQuery(ele).parents('.boxy-wrapper');
+        return p.length ? jQuery.data(p[0], 'boxy') : null;
     },
     
     // asks a question with multiple responses presented as buttons
@@ -137,9 +137,9 @@ $.extend(Boxy, {
     // you'll get the corresponding key.
     ask: function(question, answers, callback, options) {
         
-        options = $.extend({modal: true, closeable: false}, options, {show: true});
+        options = jQuery.extend({modal: true, closeable: false}, options, {show: true});
         
-        var body = $('<div></div>').append($('<div class="question"></div>').html(question));
+        var body = jQuery('<div></div>').append(jQuery('<div class="question"></div>').html(question));
         
         // ick
         var map = {}, answerStrings = [];
@@ -155,12 +155,12 @@ $.extend(Boxy, {
             }
         }
         
-        var buttons = $('<form class="answers"></form>');
-        buttons.html($.map(answerStrings, function(v) {
+        var buttons = jQuery('<form class="answers"></form>');
+        buttons.html(jQuery.map(answerStrings, function(v) {
             return "<input type='button' value='" + v + "' />";
         }).join(' '));
         
-        $('input[type=button]', buttons).click(function() {
+        jQuery('input[type=button]', buttons).click(function() {
             var clicked = this;
             Boxy.get(this).hide(function() {
                 if (callback) callback(map[clicked.value]);
@@ -231,18 +231,18 @@ Boxy.prototype = {
     // Returns a jQuery object wrapping the inner boxy region.
     // Not much reason to use this, you're probably more interested in getContent()
     getInner: function() {
-        return $('.boxy-inner', this.boxy);
+        return jQuery('.boxy-inner', this.boxy);
     },
     
     // Returns a jQuery object wrapping the boxy content region.
     // This is the user-editable content area (i.e. excludes titlebar)
     getContent: function() {
-        return $('.boxy-content', this.boxy);
+        return jQuery('.boxy-content', this.boxy);
     },
     
     // Replace dialog content
     setContent: function(newContent) {
-        newContent = $(newContent).css({display: 'block'}).addClass('boxy-content');
+        newContent = jQuery(newContent).css({display: 'block'}).addClass('boxy-content');
         if (this.options.clone) newContent = newContent.clone();   
         var content = this.getContent();
         if (content.length) {
@@ -272,9 +272,9 @@ Boxy.prototype = {
     
     // Center this dialog in the viewport
     center: function() {
-        var s = $.browser.msie ? [document.documentElement.scrollLeft, document.documentElement.scrollTop]
+        var s = jQuery.browser.msie ? [document.documentElement.scrollLeft, document.documentElement.scrollTop]
                                : [window.pageXOffset, window.pageYOffset];
-        var v = [s[0], s[1], $(window).width(), $(window).height()];
+        var v = [s[0], s[1], jQuery(window).width(), jQuery(window).height()];
         this.centerAt((v[0] + v[2] / 2), (v[1] + v[3] / 2));
         return this;
     },
@@ -309,10 +309,10 @@ Boxy.prototype = {
     show: function() {
         if (this.visible) return;
         if (this.options.modal) {
-            $('<div class="boxy-modal-blackout"></div>')
+            jQuery('<div class="boxy-modal-blackout"></div>')
                 .css({zIndex: Boxy._nextZ(),
-                      width: $(document).width(),
-                      height: $(document).height()})
+                      width: jQuery(document).width(),
+                      height: jQuery(document).height()})
                 .appendTo(document.body);
             this.toTop();
         }
@@ -326,8 +326,8 @@ Boxy.prototype = {
         if (!this.visible) return;
         var self = this;
         if (this.options.modal) {
-            $('.boxy-modal-blackout').animate({opacity: 0}, function() {
-                $(this).remove();
+            jQuery('.boxy-modal-blackout').animate({opacity: 0}, function() {
+                jQuery(this).remove();
             });
         }
         this.boxy.stop().animate({opacity: 0}, 300, function() {
@@ -358,22 +358,22 @@ Boxy.prototype = {
     _setupTitleBar: function() {
         if (this.options.title) {
             var self = this;
-            var tb = $("<div class='title-bar'></div>").html(this.options.title);
+            var tb = jQuery("<div class='title-bar'></div>").html(this.options.title);
             if (this.options.closeable) {
-                tb.append($("<a href='#' class='close'></a>").html("[close]"));
+                tb.append(jQuery("<a href='#' class='close'></a>").html("[close]"));
             }
             if (this.options.draggable) {
                 if (!Boxy.dragConfigured) {
-                    $(document).mousemove(Boxy._handleDrag);
+                    jQuery(document).mousemove(Boxy._handleDrag);
                     Boxy.dragConfigured = true;
                 }
                 tb.mousedown(function(evt) {
                     self.toTop();
                     Boxy.dragging = [self, evt.pageX - self.boxy[0].offsetLeft, evt.pageY - self.boxy[0].offsetTop];
-                    $(this).addClass('dragging');
+                    jQuery(this).addClass('dragging');
                 });
                 tb.mouseup(function() {
-                    $(this).removeClass('dragging');
+                    jQuery(this).removeClass('dragging');
                     Boxy.dragging = null;
                 });
             }
@@ -383,7 +383,7 @@ Boxy.prototype = {
     
     _setupBehaviours: function() {
         var self = this;
-        $('.close', this.boxy).click(function() {
+        jQuery('.close', this.boxy).click(function() {
             self.hide();
             return false;
         }).mousedown(function(evt) { evt.stopPropagation(); });
