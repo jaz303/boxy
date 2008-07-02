@@ -4,7 +4,6 @@
 // TODO: multi-select list
 // TODO: allow resizing when not visible
 // BUG: modal dialog blackout doesn't resize when window resizes
-// BUG: 'single' option to main plugin method not yet supported.
 
 //
 // jQuery Plugin
