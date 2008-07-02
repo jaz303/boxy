@@ -272,7 +272,7 @@ Boxy.prototype = {
     
     // Center this dialog in the viewport
     center: function() {
-        var s = $.browser.msie ? [document.body.scrollLeft, document.body.scrollTop]
+        var s = $.browser.msie ? [document.documentElement.scrollLeft, document.documentElement.scrollTop]
                                : [window.pageXOffset, window.pageYOffset];
         var v = [s[0], s[1], $(window).width(), $(window).height()];
         this.centerAt((v[0] + v[2] / 2), (v[1] + v[3] / 2));
