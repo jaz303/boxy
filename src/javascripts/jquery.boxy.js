@@ -36,6 +36,7 @@ $.fn.boxy = function(options) {
                             url: anchor.href,
                             method: options.method || 'GET',
                             dataType: 'html',
+                            data: '__math__' + Math.random(),
                             success: function(data) {
                                 data = $(data);
                                 if (options.cache) {
