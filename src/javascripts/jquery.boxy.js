@@ -28,7 +28,8 @@ jQuery.fn.boxy = function(options) {
                 var loadContent = function(after) {
                     if (Boxy.cache[href]) {
                         after(Boxy.cache[href].clone());   
-                    } else if (href.indexOf('#') === 0) {
+                    } else if (href.indexOf('#') >= 0) {
+                        href = href.substr(href.indexOf('#'));
                         Boxy.cache[href] = jQuery(href).remove();
                         after(Boxy.cache[href].clone());
                     } else { // fall back to AJAX; could do with a same-origin check
