@@ -1,4 +1,5 @@
 .boxy-wrapper { position: absolute; }
+.boxy-wrapper.fixed { position: fixed; _position: absolute; /* :hack: IE6 doesn't support fixed */ }
 
   /* Modal */
   

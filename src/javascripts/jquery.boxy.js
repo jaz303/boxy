@@ -87,7 +87,7 @@ function Boxy(element, options) {
     this.visible = false;
     this.options = jQuery.extend({
         title: null, closeable: true, draggable: true, clone: false,
-        center: true, show: true, modal: false
+        center: true, show: true, modal: false, fixed: false
     }, options || {});
     
     if (this.options.modal) {
@@ -100,6 +100,14 @@ function Boxy(element, options) {
     
     this.boxy.css('display', 'none').appendTo(document.body);
     this.toTop();
+
+    if (this.options.fixed) {
+      if (jQuery.browser.msie && jQuery.browser.version < 7) {
+        this.options.fixed = false; // IE6 doesn't support fixed positioning
+      } else {
+        this.boxy.addClass('fixed');
+      }
+    }
     
     if (this.options.center
         && typeof this.options.x == 'undefined'
@@ -273,8 +281,12 @@ Boxy.prototype = {
     
     // Center this dialog in the viewport
     center: function() {
-        var s = jQuery.browser.msie ? [document.documentElement.scrollLeft, document.documentElement.scrollTop]
+        if (this.options.fixed) {
+          var s = [0,0];
+        } else {
+          var s = jQuery.browser.msie ? [document.documentElement.scrollLeft, document.documentElement.scrollTop]
                                : [window.pageXOffset, window.pageYOffset];
+        }
         var v = [s[0], s[1], jQuery(window).width(), jQuery(window).height()];
         this.centerAt((v[0] + v[2] / 2), (v[1] + v[3] / 2));
         return this;
