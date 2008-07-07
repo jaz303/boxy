@@ -87,7 +87,7 @@ function Boxy(element, options) {
     this.visible = false;
     this.options = jQuery.extend({
         title: null, closeable: true, draggable: true, clone: false,
-        center: true, show: true, modal: false, fixed: false
+        center: true, show: true, modal: false, fixed: true
     }, options || {});
     
     if (this.options.modal) {
