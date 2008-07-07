@@ -188,6 +188,7 @@ $(function() {
   <li><a href='index.html#' onclick='return create();'>Create a new dialog - <code>new Boxy("&lt;p&gt;Content&lt;/p&gt;", {title: "Dialog"});</code></a></li>
   <li><a href='index.html#' onclick='return create({draggable: false});'>Create a new dialog, undraggable - <code>new Boxy("&lt;p&gt;Content&lt;/p&gt;", {title: "Dialog", draggable: false});</code></a></li>
   <li><a href='index.html#' onclick='return create({closeable: false});'>Create a new dialog, no default close button - <code>new Boxy("&lt;p&gt;Content&lt;/p&gt;", {title: "Dialog", closeable: false});</code></a></li>
+  <li><a href='index.html#' onclick='return create({fixed: false});'>Create a new dialog, absolute positioning - <code>new Boxy("&lt;p&gt;Content&lt;/p&gt;", {title: "Dialog", fixed: false});</code></a></li>
   <li><a href='index.html#' onclick='return create({modal: true});'>Create a new dialog, modal - <code>new Boxy("&lt;p&gt;Content&lt;/p&gt;", {title: "Dialog", modal: true});</code></a></li>
   <li><a href='index.html#' onclick='tweenUp(); return false;'>Tween newest dialog up - <code>someDialog.tween(400, 400);</code></a></li>
   <li><a href='index.html#' onclick='tweenDown(); return false;'>Tween newest dialog down - <code>someDialog.tween(100, 100);</code></a></li>
@@ -360,6 +361,12 @@ $(function() {
 	<td><code>true</code></td>
   </tr>
   <tr>
+    <td><code>fixed</code></td>
+    <td>Should we use fixed, rather than absolute, positioning? Dialogs with
+      fixed positions will on-screen irresepective of scrolling. IE6 does not
+      support fixed positioning and will always drop back to absolute.</td>
+    <td><code>true</code></td>
+  <tr>
     <td><code>show</code></td>
 	<td>
 	  Should the dialog be shown immediately? If <code>false</code>, you'll need
@@ -374,6 +381,16 @@ $(function() {
 	  other elements from receiving events.
 	</td>
 	<td><code>false</code></td>
+  </tr>
+  <tr>
+    <td><code>x</code></td>
+    <td>x (left) coordinate of dialog. Passing this option overrides <code>center</code>.</td>
+    <td><code>50</code></td>
+  </tr>
+  <tr>
+    <td><code>y</code></td>
+    <td>y (top) coordinate of dialog. Passing this option overrides <code>center</code>.</td>
+    <td><code>50</code></td>
   </tr>
 </table>
 
