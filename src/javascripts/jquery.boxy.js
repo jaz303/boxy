@@ -53,7 +53,8 @@ jQuery.fn.boxy = function(options) {
                 var active;
                 if (options.single && (active = jQuery.data(this, 'active.boxy'))) {
                     loadContent(function(content) {
-                        active.setContent(content).center().show();     
+                      active.setContent(content).show();
+                      if(options.center) active.center();   
                     });
                 } else {
                     loadContent(function(content) {
