@@ -116,8 +116,10 @@ function Boxy(element, options) {
         && typeof this.options.y == 'undefined') {
         this.center();
     } else {
-        this.moveTo(this.options.x || Boxy.DEFAULT_X,
-                    this.options.y || Boxy.DEFAULT_Y);
+        this.moveTo(
+          typeof this.options.x != 'undefined' ? this.options.x : Boxy.DEFAULT_X,
+          typeof this.options.y != 'undefined' ? this.options.y : Boxy.DEFAULT_Y
+        );
     }
     
     if (this.options.show) this.show();
@@ -207,9 +209,10 @@ Boxy.prototype = {
     // Returns the size of this boxy instance without displaying it.
     // Do not use this method if boxy is already visible, use getSize() instead.
     estimateSize: function() {
-        this.boxy.css('display', 'none')
-                 .css({top: 0, left: 0, visibility: 'hidden'})
-                 .css('display', 'block');
+        this.boxy.css({
+            visibility: 'hidden',
+            display: 'block'
+        });
         var dims = this.getSize();
         this.boxy.css('display', 'none').css('visibility', 'visible');
         return dims;
@@ -266,31 +269,67 @@ Boxy.prototype = {
     
     // Move this dialog to some position, funnily enough
     moveTo: function(x, y) {
-        this.boxy.css({left: x, top: y});
+        this.moveToX(x).moveToY(y);
+        return this;
+    },
+    moveToX: function(x) {
+        if (x != null) this.boxy.css({left: x});
+        else this.centerX();
+        return this;
+    },
+    moveToY: function(y) {
+        if (y != null) this.boxy.css({top: y});
+        else this.centerY();
         return this;
     },
     
     // Move this dialog so that it is centered at x,y
     centerAt: function(x, y) {
+        this.centerAtX(x).centerAtY(y);
+        return this;
+    },
+    centerAtX: function(x) {
         if (this.visible) {
             var s = this.getSize();
         } else {
             var s = this.estimateSize();
         }
-        this.moveTo(x - s[0] / 2, y - s[1] / 2);
+        this.moveToX(x - s[0] / 2);
+        return this;
+    },
+    centerAtY: function(y) {
+        if (this.visible) {
+            var s = this.getSize();
+        } else {
+            var s = this.estimateSize();
+        }
+        this.moveToY(y - s[1] / 2);
         return this;
     },
     
     // Center this dialog in the viewport
     center: function() {
+        this.centerX().centerY();
+        return this;
+    },
+    centerX: function() {
         if (this.options.fixed) {
-          var s = [0,0];
+          var s = 0;
         } else {
-          var s = jQuery.browser.msie ? [document.documentElement.scrollLeft, document.documentElement.scrollTop]
-                               : [window.pageXOffset, window.pageYOffset];
+          var s = jQuery.browser.msie ? document.documentElement.scrollLeft : window.pageXOffset;
         }
-        var v = [s[0], s[1], jQuery(window).width(), jQuery(window).height()];
-        this.centerAt((v[0] + v[2] / 2), (v[1] + v[3] / 2));
+        var v = [s, jQuery(window).width()];
+        this.centerAtX(v[0] + v[1] / 2);
+        return this;
+    },
+    centerY: function() {
+        if (this.options.fixed) {
+          var s = 0;
+        } else {
+          var s = jQuery.browser.msie ? document.documentElement.scrollTop : window.pageYOffset;
+        }
+        var v = [s, jQuery(window).height()];
+        this.centerAtY(v[0] + v[1] / 2);
         return this;
     },
     
