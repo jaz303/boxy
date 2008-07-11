@@ -330,7 +330,7 @@ Boxy.prototype = {
                 .appendTo(document.body);
             this.toTop();
         }
-        this.boxy.stop().css({opacity: 1, display: 'block'});
+        this.boxy.stop().css({opacity: 1}).show();
         this.visible = true;
         return this;
     },
