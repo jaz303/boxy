@@ -17,7 +17,7 @@
 // (any leftover options - e.g. 'clone' - will be passed onto the boxy constructor)
 jQuery.fn.boxy = function(options) {
     options = jQuery.extend({single: true}, options || {});
-    this.each(function() {      
+    return this.each(function() {      
         var node = this.nodeName.toLowerCase(), self = this;
         if (node == 'a') {
             jQuery(this).click(function() {
