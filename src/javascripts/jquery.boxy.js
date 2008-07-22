@@ -89,7 +89,7 @@ function Boxy(element, options) {
     this.visible = false;
     this.options = jQuery.extend({
         title: null, closeable: true, draggable: true, clone: false,
-        center: true, show: true, modal: false, fixed: true
+        center: true, show: true, modal: false, fixed: true, closeText: '[close]'
     }, options || {});
     
     if (this.options.modal) {
@@ -375,7 +375,7 @@ Boxy.prototype = {
             var self = this;
             var tb = jQuery("<div class='title-bar'></div>").html(this.options.title);
             if (this.options.closeable) {
-                tb.append(jQuery("<a href='#' class='close'></a>").html("[close]"));
+                tb.append(jQuery("<a href='#' class='close'></a>").html(this.options.closeText));
             }
             if (this.options.draggable) {
                 tb[0].onselectstart = function() { return false; }
