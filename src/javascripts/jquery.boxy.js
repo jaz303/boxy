@@ -209,10 +209,7 @@ Boxy.prototype = {
     // Returns the size of this boxy instance without displaying it.
     // Do not use this method if boxy is already visible, use getSize() instead.
     estimateSize: function() {
-        this.boxy.css({
-            visibility: 'hidden',
-            display: 'block'
-        });
+        this.boxy.css({visibility: 'hidden', display: 'block'});
         var dims = this.getSize();
         this.boxy.css('display', 'none').css('visibility', 'visible');
         return dims;
@@ -272,11 +269,13 @@ Boxy.prototype = {
         this.moveToX(x).moveToY(y);
         return this;
     },
+    
     moveToX: function(x) {
         if (x != null) this.boxy.css({left: x});
         else this.centerX();
         return this;
     },
+    
     moveToY: function(y) {
         if (y != null) this.boxy.css({top: y});
         else this.centerY();
@@ -288,21 +287,15 @@ Boxy.prototype = {
         this.centerAtX(x).centerAtY(y);
         return this;
     },
+    
     centerAtX: function(x) {
-        if (this.visible) {
-            var s = this.getSize();
-        } else {
-            var s = this.estimateSize();
-        }
+        var s = this[this.visible ? 'getSize' : 'estimateSize']();
         this.moveToX(x - s[0] / 2);
         return this;
     },
+    
     centerAtY: function(y) {
-        if (this.visible) {
-            var s = this.getSize();
-        } else {
-            var s = this.estimateSize();
-        }
+        var s = this[this.visible ? 'getSize' : 'estimateSize']();
         this.moveToY(y - s[1] / 2);
         return this;
     },
@@ -312,6 +305,7 @@ Boxy.prototype = {
         this.centerX().centerY();
         return this;
     },
+    
     centerX: function() {
         if (this.options.fixed) {
           var s = 0;
@@ -322,6 +316,7 @@ Boxy.prototype = {
         this.centerAtX(v[0] + v[1] / 2);
         return this;
     },
+    
     centerY: function() {
         if (this.options.fixed) {
           var s = 0;
