@@ -374,10 +374,13 @@ Boxy.prototype = {
         if (this.options.title) {
             var self = this;
             var tb = jQuery("<div class='title-bar'></div>").html(this.options.title);
-            if (this.options.closeable) {
+			if (this.options.closeable) {
                 tb.append(jQuery("<a href='#' class='close'></a>").html("[close]"));
             }
             if (this.options.draggable) {
+				tb[0].onselectstart = function() { return false; }
+				tb[0].unselectable = 'on';
+				tb[0].style.MozUserSelect = 'none';
                 if (!Boxy.dragConfigured) {
                     jQuery(document).mousemove(Boxy._handleDrag);
                     Boxy.dragConfigured = true;
