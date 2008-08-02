@@ -3,52 +3,56 @@
 
 <html>
   <head>
-    <title>
-      boxy              - Facebook-like dialog/overlay, with frills          </title>
+    <title>boxy - Facebook-like dialog/overlay, with frills</title>
     <meta name="description" content="" />
     <meta name="keywords" content="" />
-    <script type='text/javascript' src='jquery-1.2.3.min.js'></script>
-	      <script type='text/javascript' src='jquery.boxy.js'></script>
-        <link rel="stylesheet" href="zero.css" type="text/css" />
-    <link rel="stylesheet" href="project-page.css" type="text/css" />
-          <link rel="stylesheet" href="boxy.css" type="text/css" />
-          </head>
+    <script type='text/javascript' src='assets/jquery-1.2.3.min.js'></script>
+    <link rel="stylesheet" href="assets/project-page.css" type="text/css" />
+    
+    <!-- per Project stuff -->
+      <script type='text/javascript' src='javascripts/jquery.boxy.js'></script>
+      <link rel="stylesheet" href="stylesheets/boxy.css" type="text/css" />
+    <!-- END per project stuff -->
+        
+  </head>
   <body>
     <div id='container'>
-    
       <h1>
-        boxy                  <span class='subtitle'> - Facebook-like dialog/overlay, with frills</span>
-              </h1>
+        boxy
+        <span class='subtitle'> - Facebook-like dialog/overlay, with frills</span>
+      </h1>
       
       <div id='sidebar'>
-      
-                  <ul id='project-nav'>
-                          <li><a href='index.html#overview'>Overview</a></li>
-                          <li><a href='index.html#downloading'>Downloading</a></li>
-                          <li><a href='index.html#setup'>Setup</a></li>
-                          <li><a href='index.html#jquery-plugin'>Using the jQuery Plugin</a></li>
-                          <li><a href='index.html#manual-labour'>Creating Instances Manually</a></li>
-                          <li><a href='index.html#api'>API</a></li>
-                          <li><a href='index.html#constructor-options'>Constructor Options</a></li>
-                          <li><a href='index.html#css-selectors'>CSS Selectors</a></li>
-                          <li><a href='index.html#todo'>TODO</a></li>
-                          <li><a href='index.html#known-issues'>Known Issues</a></li>
-                      </ul>
-                
+        <ul id='project-nav'>
+          <li><a href='#overview'>Overview</a></li>
+          <li><a href='#downloading'>Downloading</a></li>
+          <li><a href='#setup'>Setup</a></li>
+          <li><a href='#jquery-plugin'>Using the jQuery Plugin</a></li>
+          <li><a href='#manual-labour'>Creating Instances Manually</a></li>
+          <li><a href='#api'>API</a></li>
+          <li><a href='#constructor-options'>Constructor Options</a></li>
+          <li><a href='#css-selectors'>CSS Selectors</a></li>
+          <li><a href='#todo'>TODO</a></li>
+          <li><a href='#known-issues'>Known Issues</a></li>
+        </ul>
         <ul id='ohoa-nav'>
-                    <li><a href='http://onehackoranother.com/projects/'>Back to projects &raquo;</a></li>
+          <li><a href='http://onehackoranother.com/projects/'>Back to projects &raquo;</a></li>
           <li><a href='http://onehackoranother.com/'>Back to onehackoranother.com &raquo;</a></li>
         </ul>
-      
-		<a href='http://thepixeltrap.com' id='pixel-trap' title='The Pixel Trap: New Directory for Web Professionals'>
-		  <img src='pixel-16.png' alt='' /> The Pixel Trap - A New Directory for Web Professionals
-		</a>
         
-        	
+        <p>
+          <a href='http://groups.google.com/group/boxy-plugin'>
+            <img src="http://groups.google.com/groups/img/3nb/groups_bar.gif" height=26 width=132 alt="Google Groups" /><br/>
+            ...join the party
+          </a>
+        </p>
+        
+        <a href='http://thepixeltrap.com' id='pixel-trap' title='The Pixel Trap: New Directory for Web Professionals'>
+		      <img src='assets/pixel-16.png' alt='' /> The Pixel Trap - A New Directory for Web Professionals
+		    </a>
       </div>
       <div id='main'>
         
-
 <h2 id='overview'>Overview</h2>
 
 <p>Boxy is a flexible, Facebook-style dialog box for jQuery with support for dragging
@@ -437,7 +441,6 @@ $(function() {
   <li>Dragging dialog beyond window edges results in strange behaviour.</li>
 </ul>
 
-      
       </div>
     </div>
   </body>
