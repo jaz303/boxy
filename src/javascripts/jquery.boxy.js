@@ -357,12 +357,19 @@ Boxy.prototype = {
     show: function() {
         if (this.visible) return;
         if (this.options.modal) {
+            var self = this;
             jQuery('<div class="boxy-modal-blackout"></div>')
                 .css({zIndex: Boxy._nextZ(),
                       width: jQuery(document).width(),
                       height: jQuery(document).height()})
                 .appendTo(document.body);
             this.toTop();
+            if (this.options.closeable) {
+                $(document.body).one('keypress.boxy', function(evt) {
+                    var key = evt.which || evt.keyCode;
+                    if (key == 27) self.hide();
+                });
+            }
         }
         this.boxy.stop().css({opacity: 1}).show();
         this.visible = true;
@@ -374,6 +381,7 @@ Boxy.prototype = {
         if (!this.visible) return;
         var self = this;
         if (this.options.modal) {
+            $(document.body).unbind('keypress.boxy');
             jQuery('.boxy-modal-blackout').animate({opacity: 0}, function() {
                 jQuery(this).remove();
             });
