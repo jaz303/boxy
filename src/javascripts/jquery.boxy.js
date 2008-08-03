@@ -350,6 +350,7 @@ Boxy.prototype = {
         return this;
     },
     
+    // Returns true if this dialog is visible, false otherwise
     isVisible: function() {
         return this.visible;    
     },
@@ -390,6 +391,17 @@ Boxy.prototype = {
     // Move this dialog box above all other boxy instances
     toTop: function() {
         this.boxy.css({zIndex: Boxy._nextZ()});
+        return this;
+    },
+    
+    // Returns the title of this dialog
+    getTitle: function() {
+        return $('> .title-bar h2', this.getInner()).html();
+    },
+    
+    // Sets the title of this dialog
+    setTitle: function(t) {
+        $('> .title-bar h2', this.getInner()).html(t);
         return this;
     },
     
