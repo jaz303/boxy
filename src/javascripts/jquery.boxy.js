@@ -365,9 +365,12 @@ Boxy.prototype = {
                 .appendTo(document.body);
             this.toTop();
             if (this.options.closeable) {
-                $(document.body).one('keypress.boxy', function(evt) {
+                $(document.body).bind('keypress.boxy', function(evt) {
                     var key = evt.which || evt.keyCode;
-                    if (key == 27) self.hide();
+                    if (key == 27) {
+                        self.hide();
+                        $(document.body).unbind('keypress.boxy');
+                    }
                 });
             }
         }
