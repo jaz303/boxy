@@ -407,7 +407,7 @@ Boxy.prototype = {
     _setupTitleBar: function() {
         if (this.options.title) {
             var self = this;
-            var tb = jQuery("<div class='title-bar'></div>").html(this.options.title);
+            var tb = jQuery("<div class='title-bar'></div>").html("<h2>" + this.options.title + "</h2>");
             if (this.options.closeable) {
                 tb.append(jQuery("<a href='#' class='close'></a>").html(this.options.closeText));
             }
