@@ -23,7 +23,7 @@ jQuery.fn.boxy = function(options) {
             jQuery(this).click(function() {
                 var anchor = this,
                     href = this.getAttribute('href'),
-                    realOpts = jQuery.extend(options, {title: this.title});
+                    realOpts = jQuery.extend({title: this.title}, options);
                     
                 var loadContent = function(after) {
                     if (Boxy.cache[href]) {
