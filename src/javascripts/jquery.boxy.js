@@ -270,62 +270,60 @@ Boxy.prototype = {
         return this;
     },
     
+    // Move this dialog (x-coord only)
     moveToX: function(x) {
-        if (x != null) this.boxy.css({left: x});
+        if (typeof x == 'number') this.boxy.css({left: x});
         else this.centerX();
         return this;
     },
     
+    // Move this dialog (y-coord only)
     moveToY: function(y) {
-        if (y != null) this.boxy.css({top: y});
+        if (typeof y == 'number') this.boxy.css({top: y});
         else this.centerY();
         return this;
     },
     
-    // Move this dialog so that it is centered at x,y
+    // Move this dialog so that it is centered at (x,y)
     centerAt: function(x, y) {
-        this.centerAtX(x).centerAtY(y);
+        var s = this[this.visible ? 'getSize' : 'estimateSize']();
+        if (typeof x == 'number') this.moveToX(x - s[0] / 2);
+        if (typeof y == 'number') this.moveToY(y - s[1] / 2);
         return this;
     },
     
     centerAtX: function(x) {
-        var s = this[this.visible ? 'getSize' : 'estimateSize']();
-        this.moveToX(x - s[0] / 2);
-        return this;
+        return this.centerAt(x, null);
     },
     
     centerAtY: function(y) {
-        var s = this[this.visible ? 'getSize' : 'estimateSize']();
-        this.moveToY(y - s[1] / 2);
-        return this;
+        return this.centerAt(null, y);
     },
     
     // Center this dialog in the viewport
-    center: function() {
-        this.centerX().centerY();
+    // axis is optional, can be 'x', 'y'.
+    center: function(axis) {
+        if (this.options.fixed) {
+            var o = [0, 0];
+        } else {
+            var o = jQuery.browser.msie ?
+                    [document.documentElement.scrollLeft, document.documentElement.scrollTop] :
+                    [window.pageXOffset, window.pageYOffset];
+        }
+        var s = [jQuery(window).width(), jQuery(window).height()];
+        if (!axis || axis == 'x') this.centerAt(o[0] + s[0] / 2, null);
+        if (!axis || axis == 'y') this.centerAt(null, o[1] + s[1] / 2);
         return this;
     },
     
+    // Center this dialog in the viewport (x-coord only)
     centerX: function() {
-        if (this.options.fixed) {
-          var s = 0;
-        } else {
-          var s = jQuery.browser.msie ? document.documentElement.scrollLeft : window.pageXOffset;
-        }
-        var v = [s, jQuery(window).width()];
-        this.centerAtX(v[0] + v[1] / 2);
-        return this;
+        return this.center('x');
     },
     
+    // Center this dialog in the viewport (y-coord only)
     centerY: function() {
-        if (this.options.fixed) {
-          var s = 0;
-        } else {
-          var s = jQuery.browser.msie ? document.documentElement.scrollTop : window.pageYOffset;
-        }
-        var v = [s, jQuery(window).height()];
-        this.centerAtY(v[0] + v[1] / 2);
-        return this;
+        return this.center('y');
     },
     
     // Resize the content region to a specific size
