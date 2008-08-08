@@ -203,7 +203,7 @@ Boxy.prototype = {
     WRAPPER:    "<table cellspacing='0' cellpadding='0' border='0' class='boxy-wrapper'>" +
                     "<tr><td class='top-left'></td><td class='top'></td><td class='top-right'></td></tr>" +
                     "<tr><td class='left'></td><td class='boxy-inner'></td><td class='right'></td></tr>" +
-                    "<tr><td class='bottom-left'></td><td class='top'></td><td class='bottom-right'></td></tr>" +
+                    "<tr><td class='bottom-left'></td><td class='bottom'></td><td class='bottom-right'></td></tr>" +
                 "</table>",
     
     // Returns the size of this boxy instance without displaying it.
