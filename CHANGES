@@ -8,7 +8,7 @@
 * Title parameter now works when passed to plugin
 * Close text is now configurable via closeText constructor parameter
 * Titlebar text is "unselectable" while dragging
-* Close event is rebound correctly if boxy has been cloned
-* Fixed bug where border would compress when dragged offscreen
-* Dialog can now be centered on a single dimension
+* Close event is rebound correctly if boxy has been cloned (RW)
+* Fixed bug where border would compress when dragged offscreen (RW)
+* Dialog can now be centered on a single dimension (RW)
 * Numerous code cleanups
