@@ -1,0 +1,14 @@
+0.1.3
+=====
+
+* Fixed CSS class name in middle-bottom cell of wrapper markup
+* Pressing escape now closes modal dialogs (as long as dialog is closeable)
+* Added getter and setter for dialog title
+* Title text is now wrapped in <h2></h2>
+* Title parameter now works when passed to plugin
+* Close text is now configurable via closeText constructor parameter
+* Titlebar text is "unselectable" while dragging
+* Close event is rebound correctly if boxy has been cloned
+* Fixed bug where border would compress when dragged offscreen
+* Dialog can now be centered on a single dimension
+* Numerous code cleanups
