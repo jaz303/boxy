@@ -89,7 +89,8 @@ function Boxy(element, options) {
     this.visible = false;
     this.options = jQuery.extend({
         title: null, closeable: true, draggable: true, clone: false,
-        center: true, show: true, modal: false, fixed: true, closeText: '[close]'
+        center: true, show: true, modal: false, fixed: true, closeText: '[close]',
+        behaviours: function(r) {}
     }, options || {});
     
     if (this.options.modal) {
@@ -98,7 +99,6 @@ function Boxy(element, options) {
     
     this.setContent(element || "<div></div>");
     this._setupTitleBar();
-    this._setupBehaviours();
     
     this.boxy.css('display', 'none').appendTo(document.body);
     this.toTop();
@@ -261,6 +261,8 @@ Boxy.prototype = {
         } else {
             this.getInner().append(newContent);
         }
+        this._setupDefaultBehaviours(newContent);
+        this.options.behaviours.call(this, newContent);
         return this;
     },
     
@@ -445,19 +447,19 @@ Boxy.prototype = {
                     self.toTop();
                     Boxy.dragging = [self, evt.pageX - self.boxy[0].offsetLeft, evt.pageY - self.boxy[0].offsetTop];
                     jQuery(this).addClass('dragging');
-                });
-                tb.mouseup(function() {
+                }).mouseup(function() {
                     jQuery(this).removeClass('dragging');
                     Boxy.dragging = null;
                 });
             }
             this.getInner().prepend(tb);
+            this._setupDefaultBehaviours(tb);
         }
     },
     
-    _setupBehaviours: function() {
+    _setupDefaultBehaviours: function(root) {
         var self = this;
-        jQuery('.close', this.boxy).click(function() {
+        jQuery('.close', root).click(function() {
             self.hide();
             return false;
         }).mousedown(function(evt) { evt.stopPropagation(); });
