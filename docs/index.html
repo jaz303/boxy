@@ -195,6 +195,7 @@ $(function() {
   <li><a href='#' onclick='return create({closeable: false});'>Create a new dialog, no default close button - <code>new Boxy("&lt;p&gt;Content&lt;/p&gt;", {title: "Dialog", closeable: false});</code></a></li>
   <li><a href='#' onclick='return create({fixed: false});'>Create a new dialog, absolute positioning - <code>new Boxy("&lt;p&gt;Content&lt;/p&gt;", {title: "Dialog", fixed: false});</code></a></li>
   <li><a href='#' onclick='return create({modal: true});'>Create a new dialog, modal - <code>new Boxy("&lt;p&gt;Content&lt;/p&gt;", {title: "Dialog", modal: true});</code></a></li>
+  <li><a href='#' onclick='return create({behaviours: function(r) { $(r).hover(function() { $(this).css("background-color", "red"); }, function() { $(this).css("background-color", "white"); }); }});'>Create a new dialog, custom behaviours - <code>new Boxy("&lt;p&gt;Content&lt;/p&gt;", {behaviours: function(r) { $(r).hover(function() { $(this).css("background-color", "red"); }, function() { $(this).css("background-color", "white"); }); }});</code></a></li>
 </ul>
 
 <h3>Modifying existing dialogs</h3>
@@ -414,6 +415,13 @@ $(function() {
     <td><code>closeText</code></td>
     <td>Text to use for close link in title bar, if enabled.</td>
     <td><code>"[close]"</code></td>
+  </tr>
+  <tr>
+    <td><code>behaviours</code></td>
+    <td>Function used to apply custom behaviours to dialog content. Invoked after each
+      call to <code>setContent()</code>.
+      Will receive a jQuery object wrapping the content region as a parameter.</td>
+    <td><code>function(r) {}</code></td>
   </tr>
 </table>
 
