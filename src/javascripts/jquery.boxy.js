@@ -360,6 +360,7 @@ Boxy.prototype = {
             var self = this;
             jQuery('<div class="boxy-modal-blackout"></div>')
                 .css({zIndex: Boxy._nextZ(),
+                      opacity: 0.7,
                       width: jQuery(document).width(),
                       height: jQuery(document).height()})
                 .appendTo(document.body);
