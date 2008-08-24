@@ -47,8 +47,8 @@
         </p>
         
         <a href='http://thepixeltrap.com' id='pixel-trap' title='The Pixel Trap: New Directory for Web Professionals'>
-		      <img src='http://onehackoranother.com/images/pixel-16.png' alt='' /> The Pixel Trap - A New Directory for Web Professionals
-		    </a>
+          <img src='http://onehackoranother.com/images/pixel-16.png' alt='' /> The Pixel Trap - A New Directory for Web Professionals
+        </a>
       </div>
       <div id='main'>
         
@@ -97,10 +97,10 @@
 <ol>
   <li>Anchors with an <code>href</code> attribute beginning with <code>#</code>
     will take as their content the DOM element with the corresponding ID, adding
-	the class <code>boxy-content</code> and making it visible in the process.</li>
+  the class <code>boxy-content</code> and making it visible in the process.</li>
   <li>Anchors with any other <code>href</code> will attempt to load their content
     with AJAX. Ideally, we'd have a same origin check and delegate cross-domain
-	requests to an iframe. That one's on the to-do list.</li>
+  requests to an iframe. That one's on the to-do list.</li>
   <li>Forms will display a modal confirmation message on submit.</li>
   <li>All other elements are ignored.</li>
 </ol>
@@ -138,34 +138,34 @@ $(function() {
 <table>
   <tr>
     <th>Option</th>
-	<th>Description</th>
-	<th>Default</th>
+  <th>Description</th>
+  <th>Default</th>
   </tr>
   <tr>
     <td><code>single</code></td>
-	<td>Display a maximum of one dialog per link at any given time.</td>
-	<td><code>true</code></td>
+  <td>Display a maximum of one dialog per link at any given time.</td>
+  <td><code>true</code></td>
   </tr>
   <tr>
     <td><code>cache</code></td>
-	<td>Whether to cache content for repeat displays of the same dialog.
-	  Cached content will always be cloned before being placed in a dialog.
-	  Caching is performed based on the <code>href</code> attribute, not the
-	  specific DOM element used to activate. <strong>Note:</strong> inline
+  <td>Whether to cache content for repeat displays of the same dialog.
+    Cached content will always be cloned before being placed in a dialog.
+    Caching is performed based on the <code>href</code> attribute, not the
+    specific DOM element used to activate. <strong>Note:</strong> inline
       dialog content is always cached to avoid having multiple elements with the
       same ID in the DOM.
-	</td>
-	<td><code>false</code>, exception applies</td>
+  </td>
+  <td><code>false</code>, exception applies</td>
   </tr>
   <tr>
     <td><code>method</code></td>
-	<td>HTTP method for AJAX requests.</td>
-	<td><code>GET</code></td>
+  <td>HTTP method for AJAX requests.</td>
+  <td><code>GET</code></td>
   </tr>
   <tr>
     <td><code>message</code></td>
-	<td>Message displayed for form confirmation hooks.</td>
-	<td><code>"Please confirm:"</code></td>
+  <td>Message displayed for form confirmation hooks.</td>
+  <td><code>"Please confirm:"</code></td>
   </tr>
 </table>
  
@@ -210,10 +210,10 @@ $(function() {
   var allDialogs = [];
   var seq = 0;
   function create(options) {
-	options = $.extend({title: "Dialog"}, options || {});
-	var dialog = new Boxy("<div><p>This is dialog " + (++seq) + ". <a href='index.html#' onclick='Boxy.get(this).hide(); return false'>Close me!</a></p></div>", options);
-	allDialogs.push(dialog);
-	return false;
+  options = $.extend({title: "Dialog"}, options || {});
+  var dialog = new Boxy("<div><p>This is dialog " + (++seq) + ". <a href='index.html#' onclick='Boxy.get(this).hide(); return false'>Close me!</a></p></div>", options);
+  allDialogs.push(dialog);
+  return false;
   }
   function recent() { return allDialogs[allDialogs.length-1]; }
   function tweenUp() { recent().tween(400,400); }
@@ -244,9 +244,9 @@ $(function() {
 $(function() {
   $('#question-actuator').click(function() {
     Boxy.ask("How are you feeling?", ["Great", "OK", "Not so good"], function(val) {
-	  alert("You chose: " + val);			  
-	}, {title: "This is a question..."});
-	return false;
+      alert("You chose: " + val);       
+    }, {title: "This is a question..."});
+    return false;
   });
 });
 &lt;/script&gt;</pre>
@@ -255,9 +255,31 @@ $(function() {
 $(function() {
   $('#question-actuator').click(function() {
     Boxy.ask("How are you feeling?", ["Great", "OK", "Not so good"], function(val) {
-	  alert("You chose: " + val);			  
-	}, {title: "This is a question..."});
-	return false;
+      alert("You chose: " + val);       
+    }, {title: "This is a question..."});
+    return false;
+  });
+});
+</script>
+
+<p>You can also use <code>Boxy.alert()</code> to display modal-style messages:</p>
+
+<p><a href='#' id='alert-actuator'>&raquo; Display a sample alert</a></p>
+
+<pre>&lt;script type=&#x27;text/javascript&#x27;&gt;
+$(function() {
+  $(&#x27;#alert-actuator&#x27;).click(function() {
+    Boxy.alert(&quot;File not found&quot;, null, {title: &#x27;Message&#x27;});
+    return false;
+  });
+});
+&lt;/script&gt;</pre>
+
+<script type='text/javascript'>
+$(function() {
+  $('#alert-actuator').click(function() {
+    Boxy.alert("File not found", null, {title: 'Message'});
+    return false;
   });
 });
 </script>
@@ -271,23 +293,30 @@ $(function() {
   <dt>Boxy.ask(question, answers, callback, options)</dt>
   <dd>
     Displays a modal, non-closeable dialog allowing the user to select from a
-	set of options. <code>question</code> is the message to be displayed to the
-	user. <code>answers</code> is an array or hash of all possible responses.
-	<code>callback</code> will receive the selected response; this will be the value
-	or corresponding key depending on whether an array or hash of answers was provided.
-	<code>options</code> is an optional set of additional options to be passed
-	to the dialog's constructor.
+  set of options. <code>question</code> is the message to be displayed to the
+  user. <code>answers</code> is an array or hash of all possible responses.
+  <code>callback</code> will receive the selected response; this will be the value
+  or corresponding key depending on whether an array or hash of answers was provided.
+  <code>options</code> is an optional set of additional options to be passed
+  to the dialog's constructor.
+  </dd>
+  <dt>Boxy.alert(message, callback, options)</dt>
+  <dd>
+    Displays a modal, non-closeable dialog displaying a message to the user.<br/>
+    <strong>Note:</strong> this method is <strong>not</strong> intended to replace
+    the native <code>window.alert()</code> function provided by browsers as it does
+    not have the capability to block program execution while the dialog is visible.
   </dd>
   <dt>new Boxy(element, options)</dt>
   <dd>
     Constructor; create a new Boxy dialog. <code>element</code> is the dialog
-	content; any valid parameter to jQuery's <code>$()</code> function is also
-	valid here. <code>options</code> is a hash of configuration options, see
-	the detailed documentation below.
+  content; any valid parameter to jQuery's <code>$()</code> function is also
+  valid here. <code>options</code> is a hash of configuration options, see
+  the detailed documentation below.
   </dd>
   <dt>estimateSize()</dt>
   <dd>Estimate the size of the dialog box while invisible. Do not use this
-	method if dialog is currently visible; use <code>getSize()</code> instead.</dd>
+  method if dialog is currently visible; use <code>getSize()</code> instead.</dd>
   <dt>getSize()</dt>
   <dd>Returns the size of the dialog as an array of <code>[width, height]</code>.</dd>
   <dt>getContentSize()</dt>
@@ -300,7 +329,7 @@ $(function() {
   <dt>getInner()</dt>
   <dd>Returns a jQuery object wrapping the dialog's inner region - everything inside
     the frame, including the title bar. Chances are you want <code>getContent()</code>,
-	below, instead.</dd>
+  below, instead.</dd>
   <dt>getContent()</dt>
   <dd>Returns a jQuery object wrapping the dialog's content region - everything inside
     the frame, excluding the title bar.</dd>
@@ -338,46 +367,46 @@ $(function() {
 <table>
   <tr>
     <th>Option</th>
-	<th>Description</th>
-	<th>Default</th>
+  <th>Description</th>
+  <th>Default</th>
   </tr>
   <tr>
     <td><code>title</code></td>
-	<td>
-	  Title to display in auto-generated title bar.
-	</td>
-	<td><code>null</code></td>
+  <td>
+    Title to display in auto-generated title bar.
+  </td>
+  <td><code>null</code></td>
   </tr>
   <tr>
     <td><code>closeable</code></td>
-	<td>
-	  Whether a close-dialog actuator should be added to the auto-generated
-	  title bar. No effect if title is unspecified.
-	</td>
-	<td><code>true</code></td>
+  <td>
+    Whether a close-dialog actuator should be added to the auto-generated
+    title bar. No effect if title is unspecified.
+  </td>
+  <td><code>true</code></td>
   </tr>
   <tr>
     <td><code>draggable</code></td>
-	<td>
-	  Whether this dialog should be draggable via the titlebar. No effect if
-	  title is unspecified.
-	</td>
-	<td><code>true</code></td>
+  <td>
+    Whether this dialog should be draggable via the titlebar. No effect if
+    title is unspecified.
+  </td>
+  <td><code>true</code></td>
   </tr>
   <tr>
     <td><code>clone</code></td>
-	<td>
-	  Should the dialog's content element be cloned before being placed in the
-	  inner region?
-	</td>
-	<td><code>false</code></td>
+  <td>
+    Should the dialog's content element be cloned before being placed in the
+    inner region?
+  </td>
+  <td><code>false</code></td>
   </tr>
   <tr>
     <td><code>center</code></td>
-	<td>
-	  Should the dialog be centred on screen?
-	</td>
-	<td><code>true</code></td>
+  <td>
+    Should the dialog be centred on screen?
+  </td>
+  <td><code>true</code></td>
   </tr>
   <tr>
     <td><code>fixed</code></td>
@@ -387,19 +416,19 @@ $(function() {
     <td><code>true</code></td>
   <tr>
     <td><code>show</code></td>
-	<td>
-	  Should the dialog be shown immediately? If <code>false</code>, you'll need
-	  to call <code>dialog.show();</code> manually.
-	</td>
-	<td><code>true</code></td>
+  <td>
+    Should the dialog be shown immediately? If <code>false</code>, you'll need
+    to call <code>dialog.show();</code> manually.
+  </td>
+  <td><code>true</code></td>
   </tr>
   <tr>
     <td><code>modal</code></td>
-	<td>
-	  Should the dialog be modal? Modal dialogs "black out" the screen, preventing
-	  other elements from receiving events.
-	</td>
-	<td><code>false</code></td>
+  <td>
+    Should the dialog be modal? Modal dialogs "black out" the screen, preventing
+    other elements from receiving events.
+  </td>
+  <td><code>false</code></td>
   </tr>
   <tr>
     <td><code>x</code></td>
@@ -459,7 +488,7 @@ $(function() {
     &lt;a href="#foobar?modal=true" rel="boxy"&gt;Open dialog&lt;/a&gt;</li>
   <li>Fade between "pages" on a dialog, like in OS X preference panes. I've
     written a tab plugin for this already, hopefully integration will be
-	easy.</li>
+  easy.</li>
 </ul>
 
       </div>

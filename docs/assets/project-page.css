@@ -83,6 +83,8 @@ table {}
   td, th { vertical-align: top; padding: 0.3em }
   td {}
   th { font-weight: bold }
+  
+strong { font-weight: bold; }
 
 .caption { font-size: 90%; margin: 1em 0 -1em 3px; color: #303030; }
   

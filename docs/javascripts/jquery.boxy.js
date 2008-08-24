@@ -146,6 +146,12 @@ jQuery.extend(Boxy, {
         return p.length ? jQuery.data(p[0], 'boxy') : null;
     },
     
+    // displays an alert box with a given message, calling optional callback
+    // after dismissal
+    alert: function(message, callback, options) {
+        return Boxy.ask(message, ['OK'], callback, options);
+    },
+    
     // asks a question with multiple responses presented as buttons
     // selected item is returned to a callback method.
     // answers may be either an array or a hash. if it's an array, the
