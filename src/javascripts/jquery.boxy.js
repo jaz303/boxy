@@ -127,7 +127,7 @@ jQuery.extend(Boxy, {
     DEFAULTS: {
         title: null, closeable: true, draggable: true, clone: false,
         center: true, show: true, modal: false, fixed: true, closeText: '[close]',
-        behaviours: function(r) {}
+        behaviours: function(r) {}, unloadOnHide: false
     },
     
     DEFAULT_X:          50,
@@ -405,7 +405,19 @@ Boxy.prototype = {
             self.boxy.css({display: 'none'});
             self.visible = false;
             if (after) after(self);
+            if (self.options.unloadOnHide) this.unload();
         });
+        return this;
+    },
+    
+    hideAndUnload: function() {
+        this.options.unloadOnHide = true;
+        this.hide();
+        return this;
+    },
+    
+    unload: function() {
+        this.boxy.remove();
         return this;
     },
     
