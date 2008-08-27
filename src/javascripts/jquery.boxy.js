@@ -1,20 +1,22 @@
-// Boxy - Facebook-style dialog, with frills
-// (c) 2008 Jason Frame
-//
-// TODO: multi-select list
-// TODO: allow resizing when not visible
-// BUG: modal dialog blackout doesn't resize when window resizes
-//
-//
-// jQuery Plugin
-//
-// single - only show a single instance at a time (default: true)
-// cache - if true, data retrieved from AJAX calls will be cached. Inline data
-//         will always be cached as we need to stash it someplace outside the DOM
-//         to avoid having multiple elements with the same ID.
-// message - confirmation message for form submit hook (default: "Please confirm:")
-// method - AJAX method to use for loading remote content (default: GET)
-// (any leftover options - e.g. 'clone' - will be passed onto the boxy constructor)
+/**
+ * Boxy 0.1.3 - Facebook-style dialog, with frills
+ *
+ * (c) 2008 Jason Frame
+ * Licensed under the MIT License (LICENSE)
+ */
+ 
+/*
+ * jQuery plugin
+ *
+ * Options:
+ *   single: only show a single instance at a time (default: true)
+ *   cache: if true, data retrieved from AJAX calls will be cached. Inline data
+ *          will always be cached as we need to stash it someplace outside the DOM
+ *          to avoid having multiple elements with the same ID.
+ *   message: confirmation message for form submit hook (default: "Please confirm:")
+ *   method: AJAX method to use for loading remote content (default: GET)
+ * (any leftover options - e.g. 'clone' - will be passed onto the boxy constructor)
+ */
 jQuery.fn.boxy = function(options) {
     options = jQuery.extend({single: true}, options || {});
     return this.each(function() {      
