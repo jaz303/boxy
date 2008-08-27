@@ -124,12 +124,14 @@ function Boxy(element, options) {
 
 };
 
+Boxy.EF = function() {};
+
 jQuery.extend(Boxy, {
     
     DEFAULTS: {
         title: null, closeable: true, draggable: true, clone: false,
         center: true, show: true, modal: false, fixed: true, closeText: '[close]',
-        behaviours: function(r) {}, unloadOnHide: false, afterShow: function() {}
+        behaviours: Boxy.EF, unloadOnHide: false, afterShow: Boxy.EF
     },
     
     DEFAULT_X:          50,
