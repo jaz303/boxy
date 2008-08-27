@@ -56,7 +56,7 @@ jQuery.fn.boxy = function(options) {
                 if (options.single && (active = jQuery.data(this, 'active.boxy'))) {
                     loadContent(function(content) {
                       active.setContent(content).show();
-                      active._setupBehaviours();
+                      active._setupDefaultBehaviours();
                       if(options.center) active.center();   
                     });
                 } else {
@@ -129,7 +129,7 @@ jQuery.extend(Boxy, {
     DEFAULTS: {
         title: null, closeable: true, draggable: true, clone: false,
         center: true, show: true, modal: false, fixed: true, closeText: '[close]',
-        behaviours: function(r) {}, unloadOnHide: false
+        behaviours: function(r) {}, unloadOnHide: false, afterShow: function() {}
     },
     
     DEFAULT_X:          50,
@@ -399,6 +399,7 @@ Boxy.prototype = {
         }
         this.boxy.stop().css({opacity: 1}).show();
         this.visible = true;
+        this.options.afterShow.call(this);
         return this;
     },
     
