@@ -18,6 +18,7 @@
 	.boxy-wrapper .bottom-left { background: url('../images/boxy-sw.png'); }
 	
 	/* IE6 hacks for the border */
+	/* NB: these must be absolute paths or URLs to your images */
 	* html .boxy-wrapper .top-left { background: none; filter:progid:DXImageTransform.Microsoft.AlphaImageLoader(src='/images/boxy-nw.png'); }
 	* html .boxy-wrapper .top-right { background: none; filter:progid:DXImageTransform.Microsoft.AlphaImageLoader(src='/images/boxy-ne.png'); }
 	* html .boxy-wrapper .bottom-right { background: none; filter:progid:DXImageTransform.Microsoft.AlphaImageLoader(src='/images/boxy-se.png'); }
