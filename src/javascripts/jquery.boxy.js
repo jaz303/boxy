@@ -146,7 +146,12 @@ jQuery.extend(Boxy, {
     load: function(url, options, after) {
         
         options = options || {};
-        var ajax = {url: url, method: options.method || 'GET'};
+        var ajax = {url: url,
+                    method: options.method || 'GET',
+                    filter: options.filter || null,
+                    cacheKey: url};
+                    
+        if (ajax.filter) ajax.cacheKey += ' ' + ajax.filter;
         
         jQuery.ajax({
             url: ajax.url,
