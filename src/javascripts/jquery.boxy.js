@@ -147,9 +147,17 @@ jQuery.extend(Boxy, {
     },
     
     // displays an alert box with a given message, calling optional callback
-    // after dismissal
+    // after dismissal.
     alert: function(message, callback, options) {
         return Boxy.ask(message, ['OK'], callback, options);
+    },
+    
+    // displays an alert box with a given message, calling after callback iff
+    // user selects OK.
+    confirm: function(message, after, options) {
+        return Boxy.ask(message, ['OK', 'Cancel'], function(response) {
+            if (response == 'OK') after();
+        }, options);
     },
     
     // asks a question with multiple responses presented as buttons

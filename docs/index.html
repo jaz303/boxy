@@ -233,52 +233,59 @@ $(function() {
 
 <h3>Asking Questions</h3>
 
-<p>Using the <code>Boxy.ask()</code> helper it's possible to prompt the user
-  to select from a list of choices, passing the response to a callback function.
-  Click below to see a demo and refer to the API documentation for more
-  information.</p>
+<p>Using the <code>Boxy.ask()</code>, <code>Boxy.alert()</code> and
+  <code>Boxy.confirm()</code> helpers it is possible to prompt the user to
+  select from a varying number of choices and fire an optional callback on
+  completion. Click on one of the links below for a demo and refer to the API
+  documentation for more information.</p>
   
-<p><a href='index.html#' id='question-actuator'>&raquo; Ask a sample question</a></p>
-
-<pre>&lt;script type='text/javascript'&gt;
-$(function() {
-  $('#question-actuator').click(function() {
-    Boxy.ask("How are you feeling?", ["Great", "OK", "Not so good"], function(val) {
-      alert("You chose: " + val);       
-    }, {title: "This is a question..."});
-    return false;
-  });
-});
-&lt;/script&gt;</pre>
-
-<script type='text/javascript'>
-$(function() {
-  $('#question-actuator').click(function() {
-    Boxy.ask("How are you feeling?", ["Great", "OK", "Not so good"], function(val) {
-      alert("You chose: " + val);       
-    }, {title: "This is a question..."});
-    return false;
-  });
-});
-</script>
-
-<p>You can also use <code>Boxy.alert()</code> to display modal-style messages:</p>
-
-<p><a href='#' id='alert-actuator'>&raquo; Display a sample alert</a></p>
+<ul>
+  <li>
+    <a href='#' id='ask-actuator'>Ask - <code>Boxy.ask()</code> -
+      user-defined options, selected option is passed to callback</a>
+  <li>
+    <a href='#' id='alert-actuator'>Alert - <code>Boxy.alert()</code> - 
+      callback always fired on dismissal</a>
+  </li>
+  <li>
+    <a href='#' id='confirm-actuator'>Confirmation - <code>Boxy.confirm()</code> -
+      callback only fired if user selects 'OK'</a>
+  </li>
+</ul>
 
 <pre>&lt;script type=&#x27;text/javascript&#x27;&gt;
 $(function() {
+  $(&#x27;#ask-actuator&#x27;).click(function() {
+    Boxy.ask(&quot;How are you feeling?&quot;, [&quot;Great&quot;, &quot;OK&quot;, &quot;Not so good&quot;], function(val) {
+      alert(&quot;You chose: &quot; + val);       
+    }, {title: &quot;This is a question...&quot;});
+    return false;
+  });
   $(&#x27;#alert-actuator&#x27;).click(function() {
     Boxy.alert(&quot;File not found&quot;, null, {title: &#x27;Message&#x27;});
     return false;
   });
+  $(&#x27;#confirm-actuator&#x27;).click(function() {
+    Boxy.confirm(&quot;Please confirm:&quot;, function() { alert(&#x27;Confirmed!&#x27;); }, {title: &#x27;Message&#x27;});
+    return false;
+  });
 });
 &lt;/script&gt;</pre>
 
 <script type='text/javascript'>
 $(function() {
+  $('#ask-actuator').click(function() {
+    Boxy.ask("How are you feeling?", ["Great", "OK", "Not so good"], function(val) {
+      alert("You chose: " + val);       
+    }, {title: "This is a question..."});
+    return false;
+  });
   $('#alert-actuator').click(function() {
     Boxy.alert("File not found", null, {title: 'Message'});
+    return false;
+  });
+  $('#confirm-actuator').click(function() {
+    Boxy.confirm("Please confirm:", function() { alert('Confirmed!'); }, {title: 'Message'});
     return false;
   });
 });
