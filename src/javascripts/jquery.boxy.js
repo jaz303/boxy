@@ -141,6 +141,27 @@ jQuery.extend(Boxy, {
     dragConfigured:     false, // only set up one drag handler for all boxys
     dragging:           null,
     
+    // load a URL and display in boxy
+    // 
+    load: function(url, options, after) {
+        
+        options = options || {};
+        var ajax = {url: url, method: options.method || 'GET'};
+        
+        jQuery.ajax({
+            url: ajax.url,
+            method: ajax.method,
+            dataType: 'html',
+            data: {__math__: Math.random()},
+            success: function(html) {
+                html = jQuery(html);
+                if (ajax.filter) html = jQuery(ajax.filter, html);
+                after(ajax, new Boxy(html, options));
+            }
+        });
+        
+    },
+    
     // allows you to get a handle to the containing boxy instance of any element
     // e.g. <a href='#' onclick='alert(Boxy.get(this));'>inspect!</a>.
     // this returns the actual instance of the boxy 'class', not just a DOM element.
