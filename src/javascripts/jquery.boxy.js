@@ -69,10 +69,8 @@ jQuery.fn.boxy = function(options) {
             });
         } else if (node == 'form') {
             jQuery(this).bind('submit.boxy', function() {
-                Boxy.ask(options.message || 'Please confirm:', ['OK', 'Cancel'], function(v) {
-                    if (v == 'OK') {
-                        jQuery(self).unbind('submit.boxy').submit();
-                    }
+                Boxy.confirm(options.message || 'Please confirm:', function() {
+                    jQuery(self).unbind('submit.boxy').submit();
                 }, {modal: true, closeable: false});
                 return false;
             });
