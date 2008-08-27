@@ -328,7 +328,8 @@ Boxy.prototype = {
             var o = [0, 0];
         } else {
             var o = jQuery.browser.msie ?
-                    [document.documentElement.scrollLeft, document.documentElement.scrollTop] :
+                    [document.body.scrollLeft || document.documentElement.scrollLeft,
+                     document.body.scrollTop  || document.documentElement.scrollTop] :
                     [window.pageXOffset, window.pageYOffset];
         }
         var s = [jQuery(window).width(), jQuery(window).height()];
