@@ -388,11 +388,11 @@ Boxy.prototype = {
                 .appendTo(document.body);
             this.toTop();
             if (this.options.closeable) {
-                $(document.body).bind('keypress.boxy', function(evt) {
+                jQuery(document.body).bind('keypress.boxy', function(evt) {
                     var key = evt.which || evt.keyCode;
                     if (key == 27) {
                         self.hide();
-                        $(document.body).unbind('keypress.boxy');
+                        jQuery(document.body).unbind('keypress.boxy');
                     }
                 });
             }
@@ -408,7 +408,7 @@ Boxy.prototype = {
         if (!this.visible) return;
         var self = this;
         if (this.options.modal) {
-            $(document.body).unbind('keypress.boxy');
+            jQuery(document.body).unbind('keypress.boxy');
             this.modalBlackout.animate({opacity: 0}, function() {
                 jQuery(this).remove();
             });
@@ -441,12 +441,12 @@ Boxy.prototype = {
     
     // Returns the title of this dialog
     getTitle: function() {
-        return $('> .title-bar h2', this.getInner()).html();
+        return jQuery('> .title-bar h2', this.getInner()).html();
     },
     
     // Sets the title of this dialog
     setTitle: function(t) {
-        $('> .title-bar h2', this.getInner()).html(t);
+        jQuery('> .title-bar h2', this.getInner()).html(t);
         return this;
     },
     
