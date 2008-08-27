@@ -9,7 +9,6 @@
  * jQuery plugin
  *
  * Options:
- *   single: only show a single instance at a time (default: true)
  *   cache: if true, data retrieved from AJAX calls will be cached. Inline data
  *          will always be cached as we need to stash it someplace outside the DOM
  *          to avoid having multiple elements with the same ID.
@@ -18,60 +17,34 @@
  * (any leftover options - e.g. 'clone' - will be passed onto the boxy constructor)
  */
 jQuery.fn.boxy = function(options) {
-    options = jQuery.extend({single: true}, options || {});
+    options = options || {};
     return this.each(function() {      
         var node = this.nodeName.toLowerCase(), self = this;
         if (node == 'a') {
             jQuery(this).click(function() {
-                var anchor = this,
+                
+                var active = jQuery.data(this, 'active.boxy'),
                     href = this.getAttribute('href'),
-                    realOpts = jQuery.extend({title: this.title}, options);
+                    localOptions = jQuery.extend({actuator: this, title: this.title}, options);
                     
-                var loadContent = function(after) {
-                    if (Boxy.cache[href]) {
-                        after(Boxy.cache[href].clone());   
-                    } else if (href.indexOf('#') >= 0) {
-                        href = href.substr(href.indexOf('#'));
-                        Boxy.cache[href] = jQuery(href).remove();
-                        after(Boxy.cache[href].clone());
-                    } else { // fall back to AJAX; could do with a same-origin check
-                        jQuery.ajax({
-                            url: anchor.href,
-                            method: options.method || 'GET',
-                            dataType: 'html',
-                            data: {__math__: Math.random()},
-                            success: function(data) {
-                                data = jQuery(data);
-                                if (options.cache) {
-                                    Boxy.cache[href] = data;
-                                    data = data.clone();
-                                }
-                                after(data);
-                            }
-                        });
-                    }
-                };
+                // simpler but needs a bit of testing eh.    
                 
-                var active;
-                if (options.single && (active = jQuery.data(this, 'active.boxy'))) {
-                    loadContent(function(content) {
-                      active.setContent(content).show();
-                      active._setupDefaultBehaviours();
-                      if(options.center) active.center();   
-                    });
-                } else {
-                    loadContent(function(content) {
-                        jQuery.data(anchor, 'active.boxy', new Boxy(content, realOpts));     
-                    });
+                if (active) {
+                    active.show();
+                    if (options.center) active.center();
+                } else if (href.indexOf('#') >= 0) {
+                    if (localOptions.clone) localOptions.unloadOnHide = true;
+                    var boxy = new Boxy(jQuery(href.substr(href.indexOf('#'))), localOptions);
+                } else { // fall back to AJAX; could do with a same-origin check
+                    Boxy.load(this.href, localOptions);
                 }
-                
                 return false;
             });
         } else if (node == 'form') {
             jQuery(this).bind('submit.boxy', function() {
                 Boxy.confirm(options.message || 'Please confirm:', function() {
                     jQuery(self).unbind('submit.boxy').submit();
-                }, {modal: true, closeable: false});
+                });
                 return false;
             });
         }
@@ -93,6 +66,12 @@ function Boxy(element, options) {
         this.options = jQuery.extend(this.options, {center: true, draggable: false});
     }
     
+    // options.actuator == DOM element that opened this boxy
+    // association will be automatically deleted when this boxy is remove()d
+    if (this.options.actuator) {
+        jQuery.data(this.options.actuator, 'active.boxy', this);
+    }
+    
     this.setContent(element || "<div></div>");
     this._setupTitleBar();
     
@@ -100,11 +79,11 @@ function Boxy(element, options) {
     this.toTop();
 
     if (this.options.fixed) {
-      if (jQuery.browser.msie && jQuery.browser.version < 7) {
-        this.options.fixed = false; // IE6 doesn't support fixed positioning
-      } else {
-        this.boxy.addClass('fixed');
-      }
+        if (jQuery.browser.msie && jQuery.browser.version < 7) {
+            this.options.fixed = false; // IE6 doesn't support fixed positioning
+        } else {
+            this.boxy.addClass('fixed');
+        }
     }
     
     if (this.options.center
@@ -146,10 +125,29 @@ jQuery.extend(Boxy, {
         options = options || {};
         var ajax = {url: url,
                     method: options.method || 'GET',
-                    filter: options.filter || null,
-                    cacheKey: url};
+                    filter: options.filter || null};
                     
-        if (ajax.filter) ajax.cacheKey += ' ' + ajax.filter;
+        if (options.cache) {
+            var cacheKey = url;
+            if (ajax.filter) cacheKey += ' ' + ajax.filter;
+            if (cacheKey in Boxy.cache) {
+                after(ajax, new Boxy(Boxy.cache[cacheKey], options));
+                return;
+            }
+        }
+        
+        jQuery.ajax({
+            url: ajax.url,
+            method: ajax.method,
+            dataType: 'html',
+            data: {__math__: Math.random()},
+            success: function(html) {
+                
+            }
+        })
+        
+        
+                    
         
         jQuery.ajax({
             url: ajax.url,
@@ -456,6 +454,9 @@ Boxy.prototype = {
     
     unload: function() {
         this.boxy.remove();
+        if (this.options.actuator) {
+            jQuery.data(this.options.actuator, 'active.boxy', null);
+        }
         return this;
     },
     
@@ -523,5 +524,4 @@ Boxy.prototype = {
             return false;
         }).mousedown(function(evt) { evt.stopPropagation(); });
     }
-    
 };
