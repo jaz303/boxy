@@ -56,7 +56,7 @@ jQuery.fn.boxy = function(options) {
 
 function Boxy(element, options) {
     
-    this.boxy = jQuery(this.WRAPPER);
+    this.boxy = jQuery(Boxy.WRAPPER);
     jQuery.data(this.boxy[0], 'boxy', this);
     
     this.visible = false;
@@ -104,6 +104,12 @@ function Boxy(element, options) {
 Boxy.EF = function() {};
 
 jQuery.extend(Boxy, {
+    
+    WRAPPER:    "<table cellspacing='0' cellpadding='0' border='0' class='boxy-wrapper'>" +
+                "<tr><td class='top-left'></td><td class='top'></td><td class='top-right'></td></tr>" +
+                "<tr><td class='left'></td><td class='boxy-inner'></td><td class='right'></td></tr>" +
+                "<tr><td class='bottom-left'></td><td class='bottom'></td><td class='bottom-right'></td></tr>" +
+                "</table>",
     
     DEFAULTS: {
         title: null, closeable: true, draggable: true, clone: false,
@@ -242,12 +248,6 @@ jQuery.extend(Boxy, {
 });
 
 Boxy.prototype = {
-    
-    WRAPPER:    "<table cellspacing='0' cellpadding='0' border='0' class='boxy-wrapper'>" +
-                    "<tr><td class='top-left'></td><td class='top'></td><td class='top-right'></td></tr>" +
-                    "<tr><td class='left'></td><td class='boxy-inner'></td><td class='right'></td></tr>" +
-                    "<tr><td class='bottom-left'></td><td class='bottom'></td><td class='bottom-right'></td></tr>" +
-                "</table>",
     
     // Returns the size of this boxy instance without displaying it.
     // Do not use this method if boxy is already visible, use getSize() instead.
