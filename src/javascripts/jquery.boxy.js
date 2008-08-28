@@ -443,7 +443,7 @@ Boxy.prototype = {
             self.boxy.css({display: 'none'});
             self.visible = false;
             if (after) after(self);
-            if (self.options.unloadOnHide) this.unload();
+            if (self.options.unloadOnHide) self.unload();
         });
         return this;
     },
