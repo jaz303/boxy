@@ -438,7 +438,7 @@ Boxy.prototype = {
     unload: function() {
         this.boxy.remove();
         if (this.options.actuator) {
-            jQuery.data(this.options.actuator, 'active.boxy', null);
+            jQuery.data(this.options.actuator, 'active.boxy', false);
         }
         return this;
     },
