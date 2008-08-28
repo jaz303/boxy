@@ -126,46 +126,27 @@ jQuery.extend(Boxy, {
     
     // load a URL and display in boxy
     // 
-    load: function(url, options, after) {
+    load: function(url, options) {
         
         options = options || {};
         var ajax = {url: url,
                     method: options.method || 'GET',
                     filter: options.filter || null};
-                    
-        if (options.cache) {
-            var cacheKey = url;
-            if (ajax.filter) cacheKey += ' ' + ajax.filter;
-            if (cacheKey in Boxy.cache) {
-                after(ajax, new Boxy(Boxy.cache[cacheKey], options));
-                return;
-            }
+        
+        var load = function(html) {
+            html = jQuery(html);
+            if (ajax.filter) html = jQuery(ajax.filter, html);
+            new Boxy(html, options);
         }
-        
-        jQuery.ajax({
-            url: ajax.url,
-            method: ajax.method,
-            dataType: 'html',
-            data: {__math__: Math.random()},
-            success: function(html) {
-                
-            }
-        })
-        
-        
                     
-        
-        jQuery.ajax({
-            url: ajax.url,
-            method: ajax.method,
-            dataType: 'html',
-            data: {__math__: Math.random()},
-            success: function(html) {
-                html = jQuery(html);
-                if (ajax.filter) html = jQuery(ajax.filter, html);
-                after(ajax, new Boxy(html, options));
-            }
-        });
+        if (options.cache && url in Boxy.cache) {
+            load(Boxy.cache[url]);
+        } else {
+            jQuery.ajax({
+                url: ajax.url, method: ajax.method, dataType: 'html',
+                data: {__math__: Math.random()}, success: load
+            });
+        }
         
     },
     
