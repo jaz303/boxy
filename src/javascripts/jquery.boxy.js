@@ -199,7 +199,9 @@ jQuery.extend(Boxy, {
     // you'll get the corresponding key.
     ask: function(question, answers, callback, options) {
         
-        options = jQuery.extend({modal: true, closeable: false}, options, {show: true});
+        options = jQuery.extend({modal: true, closeable: false},
+                                options || {},
+                                {show: true, unloadOnHide: true});
         
         var body = jQuery('<div></div>').append(jQuery('<div class="question"></div>').html(question));
         
