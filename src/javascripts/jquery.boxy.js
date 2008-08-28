@@ -27,18 +27,21 @@ jQuery.fn.boxy = function(options) {
                     href = this.getAttribute('href'),
                     localOptions = jQuery.extend({actuator: this, title: this.title}, options);
                     
-                // simpler but needs a bit of testing eh.    
-                
                 if (active) {
                     active.show();
                     if (options.center) active.center();
                 } else if (href.indexOf('#') >= 0) {
-                    if (localOptions.clone) localOptions.unloadOnHide = true;
-                    var boxy = new Boxy(jQuery(href.substr(href.indexOf('#'))), localOptions);
+                    var content = jQuery(href.substr(href.indexOf('#'))),
+                        newContent = content.clone(true);
+                    content.remove();
+                    localOptions.unloadOnHide = false;
+                    new Boxy(newContent, localOptions);
                 } else { // fall back to AJAX; could do with a same-origin check
                     Boxy.load(this.href, localOptions);
                 }
+                
                 return false;
+            
             });
         } else if (node == 'form') {
             jQuery(this).bind('submit.boxy', function() {
