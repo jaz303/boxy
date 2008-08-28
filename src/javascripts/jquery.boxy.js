@@ -37,6 +37,7 @@ jQuery.fn.boxy = function(options) {
                     localOptions.unloadOnHide = false;
                     new Boxy(newContent, localOptions);
                 } else { // fall back to AJAX; could do with a same-origin check
+                    if (localOptions.cache) localOptions.unloadOnHide = true;
                     Boxy.load(this.href, localOptions);
                 }
                 
