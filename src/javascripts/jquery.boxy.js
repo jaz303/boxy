@@ -129,17 +129,18 @@ jQuery.extend(Boxy, {
     dragging:           null,
     
     // load a URL and display in boxy
-    // 
+    // url - url to load
+    // options keys (any not listed below are passed to boxy constructor)
+    //   method: HTTP method (default: GET)
+    //   filter: jQuery selector used to filter returned HTML (default: none)
+    //   cache: cache content for successive calls? (default: false)
     load: function(url, options) {
         
         options = options || {};
-        var ajax = {url: url,
-                    method: options.method || 'GET',
-                    filter: options.filter || null};
         
         var load = function(html) {
             html = jQuery(html);
-            if (ajax.filter) html = jQuery(ajax.filter, html);
+            if (options.filter) html = jQuery(options.filter, html);
             new Boxy(html, options);
         }
                     
@@ -147,7 +148,7 @@ jQuery.extend(Boxy, {
             load(Boxy.cache[url]);
         } else {
             jQuery.ajax({
-                url: ajax.url, method: ajax.method, dataType: 'html',
+                url: url, method: options.method || 'GET', dataType: 'html',
                 data: {__math__: Math.random()}, success: load
             });
         }
