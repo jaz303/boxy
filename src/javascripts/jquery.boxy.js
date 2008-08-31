@@ -443,9 +443,9 @@ Boxy.prototype = {
         return this;
     },
     
-    hideAndUnload: function() {
+    hideAndUnload: function(after) {
         this.options.unloadOnHide = true;
-        this.hide();
+        this.hide(after);
         return this;
     },
     
