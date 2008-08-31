@@ -7,6 +7,7 @@
   
   /* Border */
 
+  .boxy-wrapper { empty-cells: show; }
 	.boxy-wrapper .top-left,
 	.boxy-wrapper .top-right,
 	.boxy-wrapper .bottom-right,
