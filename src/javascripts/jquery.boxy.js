@@ -336,6 +336,7 @@ Boxy.prototype = {
     // Center this dialog in the viewport
     // axis is optional, can be 'x', 'y'.
     center: function(axis) {
+        // anyone know how to get this data using jQuery...?
         if (this.options.fixed) {
             var o = [0, 0];
         } else {
@@ -344,7 +345,15 @@ Boxy.prototype = {
                      document.body.scrollTop  || document.documentElement.scrollTop] :
                     [window.pageXOffset, window.pageYOffset];
         }
-        var s = [jQuery(window).width(), jQuery(window).height()];
+        if (typeof window.innerWidth != 'undefined') {
+            var s = [window.innerWidth, window.innerHeight];
+        } else if (typeof document.documentElement != 'undefined'
+                   && typeof document.documentElement.clientWidth != 'undefined'
+                   && document.documentElement.clientWidth != 0) {
+            var s = [document.documentElement.clientWidth, document.documentElement.clientHeight];
+        } else {
+            var s = [document.body.clientWidth, document.body.clientHeight];
+        }
         if (!axis || axis == 'x') this.centerAt(o[0] + s[0] / 2, null);
         if (!axis || axis == 'y') this.centerAt(null, o[1] + s[1] / 2);
         return this;
