@@ -118,7 +118,7 @@ jQuery.extend(Boxy, {
     DEFAULTS: {
         title: null, closeable: true, draggable: true, clone: false,
         center: true, show: true, modal: false, fixed: true, closeText: '[close]',
-        behaviours: Boxy.EF, unloadOnHide: false, afterShow: Boxy.EF, beforeUnload: Boxy.EF }
+        behaviours: Boxy.EF, unloadOnHide: false, afterShow: Boxy.EF, beforeUnload: Boxy.EF
     },
     
     DEFAULT_X:          50,
@@ -455,7 +455,6 @@ Boxy.prototype = {
         if (this.options.actuator) {
             jQuery.data(this.options.actuator, 'active.boxy', false);
         }
-        return this;
     },
     
     // Move this dialog box above all other boxy instances
