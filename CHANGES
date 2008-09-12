@@ -20,6 +20,7 @@
 * Added option to filter AJAX content using jQuery selector
 * Fixed positioning bug with Opera
 * Added beforeUnload callback
+* Added Boxy.isModalVisible() for testing if a modal dialog is currently visible
 
 0.1.3
 =====

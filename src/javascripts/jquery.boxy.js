@@ -223,6 +223,11 @@ jQuery.extend(Boxy, {
         
     },
     
+    // returns true if a modal boxy is visible, false otherwise
+    isModalVisible: function() {
+        return jQuery('.boxy-modal-blackout').length > 0;
+    },
+    
     _handleDrag: function(evt) {
         var d;
         if (d = Boxy.dragging) {
