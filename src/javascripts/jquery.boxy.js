@@ -149,7 +149,10 @@ jQuery.extend(Boxy, {
         } else {
             jQuery.ajax({
                 url: url, method: options.method || 'GET', dataType: 'html',
-                data: {__math__: Math.random()}, success: load
+                data: {__math__: Math.random()}, success: function(html) {
+                    if (options.cache) Boxy.cache[url] = html;
+                    load(html);
+                }
             });
         }
         
