@@ -21,6 +21,10 @@
 * Fixed positioning bug with Opera
 * Added beforeUnload callback
 * Added Boxy.isModalVisible() for testing if a modal dialog is currently visible
+* Added afterHide callback
+* Added afterDrop callback
+* Modal shading now resizes with browser window
+* Added clickToFront option, bringing a dialog to front when clicking anywhere within it
 
 0.1.3
 =====
