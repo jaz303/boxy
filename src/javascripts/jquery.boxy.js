@@ -440,7 +440,7 @@ Boxy.prototype = {
         }
         this.boxy.stop().css({opacity: 1}).show();
         this.visible = true;
-        this.options.afterShow.call(this);
+        this._fire('afterShow');
         return this;
     },
     
@@ -457,7 +457,7 @@ Boxy.prototype = {
         this.boxy.stop().animate({opacity: 0}, 300, function() {
             self.boxy.css({display: 'none'});
             self.visible = false;
-            self.options.afterHide.call(this);
+            this._fire('afterHide');
             if (after) after(self);
             if (self.options.unloadOnHide) self.unload();
         });
@@ -471,7 +471,7 @@ Boxy.prototype = {
     },
     
     unload: function() {
-        this.options.beforeUnload.call(this);
+        this._fire('beforeUnload');
         this.boxy.remove();
         if (this.options.actuator) {
             jQuery.data(this.options.actuator, 'active.boxy', false);
@@ -528,6 +528,7 @@ Boxy.prototype = {
                 }).mouseup(function() {
                     jQuery(this).removeClass('dragging');
                     Boxy.dragging = null;
+                    self._fire('afterDrop');
                 });
             }
             this.getInner().prepend(tb);
@@ -541,5 +542,10 @@ Boxy.prototype = {
             self.hide();
             return false;
         }).mousedown(function(evt) { evt.stopPropagation(); });
+    },
+    
+    _fire: function(event) {
+        this.options[event].call(this);
     }
+    
 };
