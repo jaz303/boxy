@@ -87,14 +87,12 @@ function Boxy(element, options) {
         }
     }
     
-    if (this.options.center
-        && typeof this.options.x == 'undefined'
-        && typeof this.options.y == 'undefined') {
+    if (this.options.center && Boxy._u(this.options.x, this.options.y)) {
         this.center();
     } else {
         this.moveTo(
-          typeof this.options.x != 'undefined' ? this.options.x : Boxy.DEFAULT_X,
-          typeof this.options.y != 'undefined' ? this.options.y : Boxy.DEFAULT_Y
+            Boxy._u(this.options.x) ? this.options.x : Boxy.DEFAULT_X,
+            Boxy._u(this.options.y) ? this.options.y : Boxy.DEFAULT_Y
         );
     }
     
@@ -238,6 +236,12 @@ jQuery.extend(Boxy, {
     // returns true if a modal boxy is visible, false otherwise
     isModalVisible: function() {
         return jQuery('.boxy-modal-blackout').length > 0;
+    },
+    
+    _u: function() {
+        for (var i = 0; i < arguments.length; i++)
+            if (typeof arguments[i] != 'undefined') return false;
+        return true;
     },
     
     _handleDrag: function(evt) {
