@@ -22,14 +22,12 @@ jQuery.fn.boxy = function(options) {
         var node = this.nodeName.toLowerCase(), self = this;
         if (node == 'a') {
             jQuery(this).click(function() {
-                
                 var active = jQuery.data(this, 'active.boxy'),
                     href = this.getAttribute('href'),
                     localOptions = jQuery.extend({actuator: this, title: this.title}, options);
                     
                 if (active) {
                     active.show();
-                    if (options.center) active.center();
                 } else if (href.indexOf('#') >= 0) {
                     var content = jQuery(href.substr(href.indexOf('#'))),
                         newContent = content.clone(true);
@@ -42,7 +40,6 @@ jQuery.fn.boxy = function(options) {
                 }
                 
                 return false;
-            
             });
         } else if (node == 'form') {
             jQuery(this).bind('submit.boxy', function() {
