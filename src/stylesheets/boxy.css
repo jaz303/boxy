@@ -18,12 +18,12 @@
 	.boxy-wrapper .bottom-right { background: url('../images/boxy-se.png'); }
 	.boxy-wrapper .bottom-left { background: url('../images/boxy-sw.png'); }
 	
-	/* IE6 hacks for the border */
+	/* IE6+7 hacks for the border. IE7 should support this natively but fails in conjuction with modal blackout bg. */
 	/* NB: these must be absolute paths or URLs to your images */
-	* html .boxy-wrapper .top-left { background: none; filter:progid:DXImageTransform.Microsoft.AlphaImageLoader(src='/images/boxy-nw.png'); }
-	* html .boxy-wrapper .top-right { background: none; filter:progid:DXImageTransform.Microsoft.AlphaImageLoader(src='/images/boxy-ne.png'); }
-	* html .boxy-wrapper .bottom-right { background: none; filter:progid:DXImageTransform.Microsoft.AlphaImageLoader(src='/images/boxy-se.png'); }
-	* html .boxy-wrapper .bottom-left { background: none; filter:progid:DXImageTransform.Microsoft.AlphaImageLoader(src='/images/boxy-sw.png'); }
+	.boxy-wrapper .top-left { #background: none; #filter:progid:DXImageTransform.Microsoft.AlphaImageLoader(src='/images/boxy-nw.png'); }
+	.boxy-wrapper .top-right { #background: none; #filter:progid:DXImageTransform.Microsoft.AlphaImageLoader(src='/images/boxy-ne.png'); }
+	.boxy-wrapper .bottom-right { #background: none; #filter:progid:DXImageTransform.Microsoft.AlphaImageLoader(src='/images/boxy-se.png'); }
+	.boxy-wrapper .bottom-left { #background: none; #filter:progid:DXImageTransform.Microsoft.AlphaImageLoader(src='/images/boxy-sw.png'); }
 	
 	.boxy-wrapper .top,
 	.boxy-wrapper .bottom { height: 10px; background-color: black; opacity: 0.6; filter: alpha(opacity=60); padding: 0 }
