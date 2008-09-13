@@ -131,7 +131,6 @@ jQuery.extend(Boxy, {
     
     DEFAULT_X:          50,
     DEFAULT_Y:          50,
-    cache:              {},
     zIndex:             1337,
     dragConfigured:     false, // only set up one drag handler for all boxys
     dragging:           null,
@@ -139,30 +138,29 @@ jQuery.extend(Boxy, {
     // load a URL and display in boxy
     // url - url to load
     // options keys (any not listed below are passed to boxy constructor)
-    //   method: HTTP method (default: GET)
-    //   filter: jQuery selector used to filter returned HTML (default: none)
-    //   cache: cache content for successive calls? (default: false)
+    //   type: HTTP method, default: GET
+    //   cache: cache retrieved content? default: false
+    //   filter: jQuery selector used to filter remote content
     load: function(url, options) {
         
         options = options || {};
         
-        var load = function(html) {
-            html = jQuery(html);
-            if (options.filter) html = jQuery(options.filter, html);
-            new Boxy(html, options);
-        }
-                    
-        if (options.cache && url in Boxy.cache) {
-            load(Boxy.cache[url]);
-        } else {
-            jQuery.ajax({
-                url: url, method: options.method || 'GET', dataType: 'html',
-                data: {__math__: Math.random()}, success: function(html) {
-                    if (options.cache) Boxy.cache[url] = html;
-                    load(html);
-                }
-            });
-        }
+        var ajax = {
+            url: url, type: 'GET', dataType: 'html', cache: false, success: function(html) {
+                html = jQuery(html);
+                if (options.filter) html = jQuery(options.filter, html);
+                new Boxy(html, options);
+            }
+        };
+        
+        jQuery.each(['type', 'cache'], function() {
+            if (this in options) {
+                ajax[this] = options[this];
+                delete options[this];
+            }
+        });
+        
+        jQuery.ajax(ajax);
         
     },
     
