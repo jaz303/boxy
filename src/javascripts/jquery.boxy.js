@@ -244,6 +244,13 @@ jQuery.extend(Boxy, {
         return true;
     },
     
+    _handleResize: function(evt) {
+        var v = Boxy._viewport();
+        jQuery('.boxy-modal-blackout').css({
+            top: v.top, left: v.left, width: v.width, height: v.height
+        });
+    },
+    
     _handleDrag: function(evt) {
         var d;
         if (d = Boxy.dragging) {
@@ -253,7 +260,21 @@ jQuery.extend(Boxy, {
     
     _nextZ: function() {
         return Boxy.zIndex++;
+    },
+    
+    _viewport: function() {
+        var d = document.documentElement, b = document.body, w = window;
+        return jQuery.extend(
+            jQuery.browser.msie ?
+                { left: b.scrollLeft || d.scrollLeft, top: b.scrollTop || d.scrollTop } :
+                { left: w.pageXOffset, top: w.pageYOffset },
+            !Boxy._u(w.innerWidth) ?
+                { width: w.innerWidth, height: w.innerHeight } :
+                (!Boxy._u(d) && !Boxy._u(d.clientWidth) && d.clientWidth != 0 ?
+                    { width: d.clientWidth, height: d.clientHeight } :
+                    { width: b.clientWidth, height: b.clientHeight }) );
     }
+
 });
 
 Boxy.prototype = {
@@ -357,26 +378,10 @@ Boxy.prototype = {
     // Center this dialog in the viewport
     // axis is optional, can be 'x', 'y'.
     center: function(axis) {
-        // anyone know how to get this data using jQuery...?
-        if (this.options.fixed) {
-            var o = [0, 0];
-        } else {
-            var o = jQuery.browser.msie ?
-                    [document.body.scrollLeft || document.documentElement.scrollLeft,
-                     document.body.scrollTop  || document.documentElement.scrollTop] :
-                    [window.pageXOffset, window.pageYOffset];
-        }
-        if (typeof window.innerWidth != 'undefined') {
-            var s = [window.innerWidth, window.innerHeight];
-        } else if (typeof document.documentElement != 'undefined'
-                   && typeof document.documentElement.clientWidth != 'undefined'
-                   && document.documentElement.clientWidth != 0) {
-            var s = [document.documentElement.clientWidth, document.documentElement.clientHeight];
-        } else {
-            var s = [document.body.clientWidth, document.body.clientHeight];
-        }
-        if (!axis || axis == 'x') this.centerAt(o[0] + s[0] / 2, null);
-        if (!axis || axis == 'y') this.centerAt(null, o[1] + s[1] / 2);
+        var v = Boxy._viewport();
+        var o = this.options.fixed ? [0, 0] : [v.left, v.top];
+        if (!axis || axis == 'x') this.centerAt(o[0] + v.width / 2, null);
+        if (!axis || axis == 'y') this.centerAt(null, o[1] + v.height / 2);
         return this;
     },
     
