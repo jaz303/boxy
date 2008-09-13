@@ -326,13 +326,9 @@ Boxy.prototype = {
     // Replace dialog content
     setContent: function(newContent) {
         newContent = jQuery(newContent).css({display: 'block'}).addClass('boxy-content');
-        if (this.options.clone) newContent = newContent.clone(true);   
-        var content = this.getContent();
-        if (content.length) {
-            content.replaceWith(newContent);   
-        } else {
-            this.getInner().append(newContent);
-        }
+        if (this.options.clone) newContent = newContent.clone(true);
+        this.getContent().remove();
+        this.getInner().append(newContent);
         this._setupDefaultBehaviours(newContent);
         this.options.behaviours.call(this, newContent);
         return this;
