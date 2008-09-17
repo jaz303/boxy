@@ -294,6 +294,17 @@ $(function() {
 <h2 id='api'>API</h2>
 
 <dl class='docs'>
+  <dt>Boxy.load(url, options)</dt>
+  <dd>
+    Load content from a URL and display in a Boxy dialog. The following options are
+    supported:
+    <ul>
+      <li><code>method</code> - HTTP method, defaults to <code>GET</code></li>
+      <li><code>filter</code> - jQuery expression used to filter remote content</li>
+      <li><code>cache</code> - if <code>true</code>, cache content for successive calls. Default: <code>false</code>.</li>
+    </ul>
+    <p>(any additional options you specify will be passed to the Boxy constructor)</p>
+  </dd>
   <dt>Boxy.get(element)</dt>
   <dd>Returns the Boxy instance containing <code>element</code>, e.g.
     <code>&lt;a href="#" onclick="Boxy.get(this).hide();"&gt;Close dialog&lt;/a&gt;</code>.</dd>
@@ -314,6 +325,13 @@ $(function() {
     the native <code>window.alert()</code> function provided by browsers as it does
     not have the capability to block program execution while the dialog is visible.
   </dd>
+  <dt>Boxy.confirm(message, callback, options)</dt>
+    Displays a modal, non-closeable dialog displaying a message with OK and Cancel buttons.
+    Callback will only be fired if user selects OK.<br/>
+    <strong>Note:</strong> this method is <strong>not</strong> intended to replace
+    the native <code>window.confirm()</code> function provided by browsers as it does
+    not have the capability to block program execution while the dialog is visible.
+  <dd>
   <dt>new Boxy(element, options)</dt>
   <dd>
     Constructor; create a new Boxy dialog. <code>element</code> is the dialog
@@ -344,7 +362,10 @@ $(function() {
   <dd>Sets the dialog content; any valid parameter to <code>$()</code> is valid
     for <code>newContent</code>. Chainable.</dd>
   <dt>moveTo(x,y)</dt>
-  <dd>Moves the dialog so that its top-left is at (x,y). Chainable.</dd>
+  <dd>
+    Moves the dialog so that its top-left is at (x,y).
+    Make either value <code>null</code> to center on a single co-ordinate.
+    Chainable.</dd>
   <dt>centerAt(x,y)</dt>
   <dd>Moves the dialog so that its center is at (x,y). Chainable.</dd>
   <dt>center()</dt>
@@ -361,6 +382,12 @@ $(function() {
   <dd>Show the dialog. Chainable.</dd>
   <dt>hide(after)</dt>
   <dd>Hide the dialog, firing optional callback <code>after</code> on completion. Chainable.</dd>
+  <dt>hideAndUnload(after)</dt>
+  <dd>Hide the dialog and then immediately unload. <code>after</code> callback will be fired
+    before unloading. Chainable.</dd>
+  <dt>unload()</dt>
+  <dd>Remove this dialog from the DOM and sever its actuator link, if any.
+    Once a dialog has been unloaded any further operations on it are undefined.</dd>
   <dt>toTop()</dt>
   <dd>Move this dialog above all others. Chainable.</dd>
   <dt>getTitle()</dt>
@@ -393,6 +420,11 @@ $(function() {
   <td><code>true</code></td>
   </tr>
   <tr>
+    <td><code>closeText</code></td>
+    <td>Text to use for close link in title bar, if enabled.</td>
+    <td><code>"[close]"</code></td>
+  </tr>
+  <tr>
     <td><code>draggable</code></td>
   <td>
     Whether this dialog should be draggable via the titlebar. No effect if
@@ -402,12 +434,21 @@ $(function() {
   </tr>
   <tr>
     <td><code>clone</code></td>
-  <td>
-    Should the dialog's content element be cloned before being placed in the
-    inner region?
-  </td>
-  <td><code>false</code></td>
+    <td>
+      Should the dialog's content element be cloned before being placed in the
+      inner region?
+    </td>
+    <td><code>false</code></td>
   </tr>
+  <tr>
+    <td><code>actuator</code></td>
+    <td>
+      DOM element (not jQuery object) which triggered this dialog. A link between the
+      two will be set up allowing a reference to the dialog to be later retrieved from
+      the element by doing <code>$.data(element, 'active.boxy')</code>. The link will
+      be automatically severed when the dialog is unloaded.
+    </td>
+    <td><code>null</code></td>
   <tr>
     <td><code>center</code></td>
   <td>
@@ -425,7 +466,7 @@ $(function() {
     <td><code>show</code></td>
   <td>
     Should the dialog be shown immediately? If <code>false</code>, you'll need
-    to call <code>dialog.show();</code> manually.
+    to call <code>dialog.show()</code> manually.
   </td>
   <td><code>true</code></td>
   </tr>
@@ -439,25 +480,47 @@ $(function() {
   </tr>
   <tr>
     <td><code>x</code></td>
-    <td>x (left) coordinate of dialog. Passing this option overrides <code>center</code>.</td>
+    <td>x (left) coordinate of dialog.
+      Passing this option overrides <code>center</code>.
+      Pass <code>null</code> to center on this coordinate only.</td>
     <td><code>50</code></td>
   </tr>
   <tr>
     <td><code>y</code></td>
-    <td>y (top) coordinate of dialog. Passing this option overrides <code>center</code>.</td>
+    <td>y (top) coordinate of dialog.
+      Passing this option overrides <code>center</code>.
+      Pass <code>null</code> to center on this coordinate only.</td>
     <td><code>50</code></td>
   </tr>
   <tr>
-    <td><code>closeText</code></td>
-    <td>Text to use for close link in title bar, if enabled.</td>
-    <td><code>"[close]"</code></td>
+    <td><code>unloadOnHide</code></td>
+    <td>
+      If true, this dialog will be unloaded (e.g. removed from the DOM) after it is hidden.
+    </td>
+    <td><code>false</code></td>
   </tr>
   <tr>
     <td><code>behaviours</code></td>
     <td>Function used to apply custom behaviours to dialog content. Invoked after each
-      call to <code>setContent()</code>.
-      Will receive a jQuery object wrapping the content region as a parameter.</td>
+      call to <code>setContent()</code>, and executes in the context of the <code>Boxy</code>
+      object. Will receive a jQuery object wrapping the content region as a parameter.</td>
     <td><code>function(r) {}</code></td>
+  </tr>
+  <tr>
+    <td><code>afterShow</code></td>
+    <td>
+      Callback invoked after this dialog becomes visible; executes in the context of the
+      <code>Boxy</code> object. Can be used to focus on form inputs.
+    </td>
+    <td><code>function() {}</code></td>
+  </tr>
+  <tr>
+    <td><code>beforeUnload</code></td>
+    <td>
+      Callback invoked before this dialog is unloaded; executes in the context of the
+      <code>Boxy</code> object.
+    </td>
+    <td><code>function() {}</code></td>
   </tr>
 </table>
 
@@ -469,6 +532,8 @@ $(function() {
 <dl class='docs'>
   <dt>.boxy-wrapper .title-bar</dt>
   <dd><code>div</code> wrapping the auto-generated title bar.</dd>
+  <dt>.boxy-wrapper .title-bar h2</dt>
+  <dd>Contents of the title bar.</dd>
   <dt>.boxy-wrapper .title-bar.dragging</dt>
   <dd>Title bar while with drag in progress.</dd>
   <dt>.boxy-wrapper .title-bar .close</dt>
@@ -489,8 +554,6 @@ $(function() {
 <h2 id='todo'>TODO</h2>
 
 <ul>
-  <li>Event listeners/callbacks for a bunch of stuff - focus, dragging, show,
-    hide etc.</li>
   <li>Ability to pass display options via URL like Thickbox and Facebox, e.g.
     &lt;a href="#foobar?modal=true" rel="boxy"&gt;Open dialog&lt;/a&gt;</li>
   <li>Fade between "pages" on a dialog, like in OS X preference panes. I've
