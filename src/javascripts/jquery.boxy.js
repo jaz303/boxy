@@ -476,6 +476,10 @@ Boxy.prototype = {
         return this;
     },
     
+    toggle: function() {
+        this[this.visible ? 'hide' : 'show']();
+    },
+    
     hideAndUnload: function(after) {
         this.options.unloadOnHide = true;
         this.hide(after);
