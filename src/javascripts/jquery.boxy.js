@@ -22,7 +22,7 @@ jQuery.fn.boxy = function(options) {
         var node = this.nodeName.toLowerCase(), self = this;
         if (node == 'a') {
             jQuery(this).click(function() {
-                var active = jQuery.data(this, 'active.boxy'),
+                var active = Boxy.linkedTo(this),
                     href = this.getAttribute('href'),
                     localOptions = jQuery.extend({actuator: this, title: this.title}, options);
                     
@@ -171,6 +171,12 @@ jQuery.extend(Boxy, {
     get: function(ele) {
         var p = jQuery(ele).parents('.boxy-wrapper');
         return p.length ? jQuery.data(p[0], 'boxy') : null;
+    },
+    
+    // returns the boxy instance which has been linked to a given element via the
+    // 'actuator' constructor option.
+    linkedTo: function(ele) {
+        return jQuery.data(ele, 'active.boxy');
     },
     
     // displays an alert box with a given message, calling optional callback
