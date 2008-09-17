@@ -25,6 +25,8 @@
 * Added afterDrop callback
 * Modal shading now resizes with browser window
 * Added clickToFront option, bringing a dialog to front when clicking anywhere within it
+* Added Boxy.linkedTo() to get boxy instance linked to a given element via 'actuator' option
+* Added boxy.toggle() to toggle between visible/hidden
 
 0.1.3
 =====
