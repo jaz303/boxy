@@ -133,6 +133,7 @@ jQuery.extend(Boxy, {
     DEFAULT_Y:          50,
     zIndex:             1337,
     dragConfigured:     false, // only set up one drag handler for all boxys
+    resizeConfigured:   false,
     dragging:           null,
     
     // load a URL and display in boxy
@@ -250,10 +251,10 @@ jQuery.extend(Boxy, {
     },
     
     _handleResize: function(evt) {
-        var v = Boxy._viewport();
-        jQuery('.boxy-modal-blackout').css({
-            top: v.top, left: v.left, width: v.width, height: v.height
-        });
+        var d = jQuery(document);
+        jQuery('.boxy-modal-blackout').css('display', 'none').css({
+            width: d.width(), height: d.height()
+        }).css('display', 'block');
     },
     
     _handleDrag: function(evt) {
@@ -428,6 +429,10 @@ Boxy.prototype = {
         if (this.visible) return;
         if (this.options.modal) {
             var self = this;
+            if (!Boxy.resizeConfigured) {
+                Boxy.resizeConfigured = true;
+                jQuery(window).resize(function() { Boxy._handleResize(); });
+            }
             this.modalBlackout = jQuery('<div class="boxy-modal-blackout"></div>')
                 .css({zIndex: Boxy._nextZ(),
                       opacity: 0.7,
