@@ -469,7 +469,7 @@ Boxy.prototype = {
         this.boxy.stop().animate({opacity: 0}, 300, function() {
             self.boxy.css({display: 'none'});
             self.visible = false;
-            this._fire('afterHide');
+            self._fire('afterHide');
             if (after) after(self);
             if (self.options.unloadOnHide) self.unload();
         });
