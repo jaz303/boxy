@@ -115,6 +115,7 @@ jQuery.extend(Boxy, {
         closeable:              true,           // display close link in titlebar?
         draggable:              true,           // can this dialog be dragged?
         clone:                  false,          // clone content prior to insertion into dialog?
+        actuator:               null,           // element which opened this dialog
         center:                 true,           // center dialog in viewport?
         show:                   true,           // show dialog immediately?
         modal:                  false,          // make dialog modal?
