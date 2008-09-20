@@ -478,6 +478,7 @@ Boxy.prototype = {
     
     toggle: function() {
         this[this.visible ? 'hide' : 'show']();
+        return this;
     },
     
     hideAndUnload: function(after) {
