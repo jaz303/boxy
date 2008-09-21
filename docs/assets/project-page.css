@@ -87,6 +87,8 @@ table {}
 strong { font-weight: bold; }
 
 .caption { font-size: 90%; margin: 1em 0 -1em 3px; color: #303030; }
+
+.flash { border: 1px solid #a0a0a0; padding: 0.7em; text-align: center; background-color: #f0f0f0; }
   
 .first { margin-top: 0; }
 .cl { clear: left; }

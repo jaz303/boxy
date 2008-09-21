@@ -23,6 +23,12 @@
         <span class='subtitle'> - Facebook-like dialog/overlay, with frills</span>
       </h1>
       
+      <div id='sidebar'>
+        <ul id='ohoa-nav'>
+          <li><a href='index.html'>Back to documentation &raquo;</a></li>
+        </ul>
+      </div>
+      
       <div id='main'>
         
         <h2>Diagnostics</h2>
@@ -214,11 +220,13 @@
           $('#z-index').click(function() {
               zIndex = new Boxy(
                 "<div>Test content</div>", { clickToFront: true }
-              )
+              );
+              return false;
           });
           
           $('#z-index-latest').click(function() {
               zIndex.toTop();
+              return false;
           });
           
           //
@@ -242,10 +250,12 @@
           var noShow;
           $('#no-show').click(function() {
               noShow = new Boxy("<div>content</div>", {show: false});
+              return false;
           });
           
           $('#no-show-now').click(function() {
               noShow.show();
+              return false;
           });
           
           // Actuator
@@ -253,16 +263,15 @@
           $('#actuator').click(function() {
               var ele = $('#actuator-toggle')[0];
               new Boxy("<div>test content</div>", {actuator: ele, show: false});
-            
+              return false;
           });
           $('#actuator-toggle').click(function() {
               Boxy.linkedTo(this).toggle();
+              return false;
           });
           
         });
       </script>
-
-
 
     </div>
   </body>
