@@ -24,6 +24,8 @@ jQuery.fn.boxy = function(options) {
                     href = this.getAttribute('href'),
                     localOptions = jQuery.extend({actuator: this, title: this.title}, options);
                     
+                if (href.match(/(&|\?)boxy\.modal/)) localOptions.modal = true;
+                    
                 if (active) {
                     active.show();
                 } else if (href.indexOf('#') >= 0) {
