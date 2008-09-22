@@ -132,6 +132,7 @@ jQuery.extend(Boxy, {
     
     DEFAULT_X:          50,
     DEFAULT_Y:          50,
+    MODAL_OPACITY:      0.7,
     zIndex:             1337,
     dragConfigured:     false, // only set up one drag handler for all boxys
     resizeConfigured:   false,
@@ -436,7 +437,7 @@ Boxy.prototype = {
             }
             this.modalBlackout = jQuery('<div class="boxy-modal-blackout"></div>')
                 .css({zIndex: Boxy._nextZ(),
-                      opacity: 0.7,
+                      opacity: Boxy.MODAL_OPACITY,
                       width: jQuery(document).width(),
                       height: jQuery(document).height()})
                 .appendTo(document.body);
