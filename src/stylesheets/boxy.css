@@ -3,7 +3,7 @@
 
   /* Modal */
   
-  .boxy-modal-blackout { position: absolute; background-color: black; left: 0; top: 0; }
+  .boxy-modal-blackout { position: absolute; background-color: black; left: 0; top: 0; width: 100%; }
   
   /* Border */
 

@@ -253,10 +253,9 @@ jQuery.extend(Boxy, {
     },
     
     _handleResize: function(evt) {
-        var d = jQuery(document);
-        jQuery('.boxy-modal-blackout').css('display', 'none').css({
-            width: d.width(), height: d.height()
-        }).css('display', 'block');
+        jQuery('.boxy-modal-blackout').css('display', 'none')
+                                      .css(Boxy._documentSize())
+                                      .css('display', 'block');
     },
     
     _handleDrag: function(evt) {
@@ -281,6 +280,10 @@ jQuery.extend(Boxy, {
                 (!Boxy._u(d) && !Boxy._u(d.clientWidth) && d.clientWidth != 0 ?
                     { width: d.clientWidth, height: d.clientHeight } :
                     { width: b.clientWidth, height: b.clientHeight }) );
+    },
+    
+    _documentSize: function() {
+        return {height: document.body.offsetHeight};
     }
 
 });
@@ -436,11 +439,9 @@ Boxy.prototype = {
                 jQuery(window).resize(function() { Boxy._handleResize(); });
             }
             this.modalBlackout = jQuery('<div class="boxy-modal-blackout"></div>')
-                .css({zIndex: Boxy._nextZ(),
-                      opacity: Boxy.MODAL_OPACITY,
-                      width: jQuery(document).width(),
-                      height: jQuery(document).height()})
-                .appendTo(document.body);
+                .css(jQuery.extend(Boxy._documentSize(), {
+                    zIndex: Boxy._nextZ(), opacity: Boxy.MODAL_OPACITY
+                })).appendTo(document.body);
             this.toTop();
             if (this.options.closeable) {
                 jQuery(document.body).bind('keypress.boxy', function(evt) {
