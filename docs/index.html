@@ -1,7 +1,7 @@
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
   "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 
-<html>
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
   <head>
     <title>boxy - Facebook-like dialog/overlay, with frills</title>
     <meta name="description" content="" />
@@ -45,7 +45,7 @@
         
         <p>
           <a href='http://groups.google.com/group/boxy-plugin'>
-            <img src="http://groups.google.com/groups/img/3nb/groups_bar.gif" height=26 width=132 alt="Google Groups" /><br/>
+            <img src="http://groups.google.com/groups/img/3nb/groups_bar.gif" height="26" width="132" alt="Google Groups" /><br/>
             ...join the party
           </a>
         </p>
@@ -196,19 +196,19 @@ $(function() {
 </ul>
 
 <script type='text/javascript'>
-  var allDialogs = [];
-  var seq = 0;
-  function create(options) {
-  options = $.extend({title: "Dialog"}, options || {});
-  var dialog = new Boxy("<div><p>This is dialog " + (++seq) + ". <a href='index.html#' onclick='Boxy.get(this).hide(); return false'>Close me!</a></p></div>", options);
-  allDialogs.push(dialog);
-  return false;
-  }
-  function recent() { return allDialogs[allDialogs.length-1]; }
-  function tweenUp() { recent().tween(400,400); }
-  function tweenDown() { recent().tween(100,100); }
-  function getTitle() { alert(recent().getTitle()); }
-  function setTitle() { recent().setTitle(prompt("Enter new title:")); }
+var allDialogs = [];
+var seq = 0;
+function create(options) {
+options = $.extend({title: "Dialog"}, options || {});
+var dialog = new Boxy("<div><p>This is dialog " + (++seq) + ". <a href='index.html#' onclick='Boxy.get(this).hide(); return false'>Close me!</a></p></div>", options);
+allDialogs.push(dialog);
+return false;
+}
+function recent() { return allDialogs[allDialogs.length-1]; }
+function tweenUp() { recent().tween(400,400); }
+function tweenDown() { recent().tween(100,100); }
+function getTitle() { alert(recent().getTitle()); }
+function setTitle() { recent().setTitle(prompt("Enter new title:")); }
 </script>
 
 
@@ -232,6 +232,7 @@ $(function() {
   <li>
     <a href='#' id='ask-actuator'>Ask - <code>Boxy.ask()</code> -
       user-defined options, selected option is passed to callback</a>
+  </li>
   <li>
     <a href='#' id='alert-actuator'>Alert - <code>Boxy.alert()</code> - 
       callback always fired on dismissal</a>
@@ -322,7 +323,7 @@ $(function() {
     <strong>Note:</strong> this method is <strong>not</strong> intended to replace
     the native <code>window.confirm()</code> function provided by browsers as it does
     not have the capability to block program execution while the dialog is visible.
-  <dd>
+  </dd>
   <dt>Boxy.linkedTo(ele)</dt>
   <dd>
     Returns the Boxy instance which has been linked to DOM element <code>ele</code> via the
@@ -346,9 +347,9 @@ $(function() {
   <dd>Returns the size of the dialog's content region - by default this is
     everything within the dialog's frame, excluding title bar.</dd>
   <dt>getPosition()</dt>
-  <dd>Returns the co-ords of the dialog's top-left as an array of <code>[x,y]</code>.
+  <dd>Returns the co-ords of the dialog's top-left as an array of <code>[x,y]</code>.</dd>
   <dt>getCenter()</dt>
-  <dd>Returns the co-ords of the dialog's center as an array of <code>[x,y]</code>.
+  <dd>Returns the co-ords of the dialog's center as an array of <code>[x,y]</code>.</dd>
   <dt>getInner()</dt>
   <dd>Returns a jQuery object wrapping the dialog's inner region - everything inside
     the frame, including the title bar. Chances are you want <code>getContent()</code>,
@@ -378,7 +379,7 @@ $(function() {
   <dd>Tweens the dialog to [w,h], firing optional callback <code>after</code> on
     completion. The callback will receive the Boxy instance as an argument. Chainable.</dd>
   <dt>isVisible()</dt>
-  <dd>Returns <code>true</code> if this dialog is currently visible, <code>false</code> otherwise.
+  <dd>Returns <code>true</code> if this dialog is currently visible, <code>false</code> otherwise.</dd>
   <dt>show()</dt>
   <dd>Show the dialog. Chainable.</dd>
   <dt>hide(after)</dt>
@@ -452,6 +453,7 @@ $(function() {
       be automatically severed when the dialog is unloaded.
     </td>
     <td><code>null</code></td>
+  </tr>
   <tr>
     <td><code>center</code></td>
   <td>
@@ -465,6 +467,7 @@ $(function() {
       fixed positions will on-screen irrespective of scrolling. IE6 does not
       support fixed positioning and will always drop back to absolute.</td>
     <td><code>true</code></td>
+  </tr>
   <tr>
     <td><code>show</code></td>
   <td>
@@ -524,6 +527,7 @@ $(function() {
       <code>Boxy</code> object.
     </td>
     <td><code>function() {}</code></td>
+  </tr>
   <tr>
     <td><code>afterShow</code></td>
     <td>
