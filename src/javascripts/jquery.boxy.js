@@ -283,7 +283,7 @@ jQuery.extend(Boxy, {
     },
     
     _documentSize: function() {
-        return {height: document.body.offsetHeight};
+        return {height: jQuery(document).height(), width: '100%'};
     }
 
 });
