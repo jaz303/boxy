@@ -208,30 +208,23 @@ jQuery.extend(Boxy, {
                                 {show: true, unloadOnHide: true});
         
         var body = jQuery('<div></div>').append(jQuery('<div class="question"></div>').html(question));
-        
-        // ick
-        var map = {}, answerStrings = [];
-        if (answers instanceof Array) {
-            for (var i = 0; i < answers.length; i++) {
-                map[answers[i]] = answers[i];
-                answerStrings.push(answers[i]);
-            }
-        } else {
-            for (var k in answers) {
-                map[answers[k]] = k;
-                answerStrings.push(answers[k]);
-            }
-        }
-        
+    
         var buttons = jQuery('<form class="answers"></form>');
-        buttons.html(jQuery.map(answerStrings, function(v) {
-            return "<input type='button' value='" + v + "' />";
+        buttons.html(jQuery.map(Boxy._values(answers), function(v) {
+            return "<input type='button' value='" + v + "' />" 
         }).join(' '));
         
         jQuery('input[type=button]', buttons).click(function() {
             var clicked = this;
             Boxy.get(this).hide(function() {
-                if (callback) callback(map[clicked.value]);
+                if (callback) {
+                    jQuery.each(answers, function(i, val) {
+                        if (val == clicked.value) {
+                            callback(answers instanceof Array ? val : i);
+                            return false;
+                        }
+                    });
+                }
             });
         });
         
@@ -250,6 +243,13 @@ jQuery.extend(Boxy, {
         for (var i = 0; i < arguments.length; i++)
             if (typeof arguments[i] != 'undefined') return false;
         return true;
+    },
+
+    _values: function(t) {
+        if (t instanceof Array) return t;
+        var o = [];
+        for (var k in t) o.push(t[k]);
+        return o;
     },
     
     _handleResize: function(evt) {
