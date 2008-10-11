@@ -80,7 +80,7 @@ function Boxy(element, options) {
     this.toTop();
 
     if (this.options.fixed) {
-        if (jQuery.browser.msie && jQuery.browser.version < 7) {
+        if (Boxy.IE6) {
             this.options.fixed = false; // IE6 doesn't support fixed positioning
         } else {
             this.boxy.addClass('fixed');
@@ -130,6 +130,7 @@ jQuery.extend(Boxy, {
         beforeUnload:           Boxy.EF         // callback fired after dialog is unloaded. executed in context of Boxy instance.
     },
     
+    IE6:                (jQuery.browser.msie && jQuery.browser.version < 7),
     DEFAULT_X:          50,
     DEFAULT_Y:          50,
     MODAL_OPACITY:      0.7,
@@ -254,7 +255,7 @@ jQuery.extend(Boxy, {
     
     _handleResize: function(evt) {
         jQuery('.boxy-modal-blackout').css('display', 'none')
-                                      .css(Boxy._documentSize())
+                                      .css(Boxy._cssForOverlay())
                                       .css('display', 'block');
     },
     
@@ -282,8 +283,20 @@ jQuery.extend(Boxy, {
                     { width: b.clientWidth, height: b.clientHeight }) );
     },
     
-    _documentSize: function() {
-        return {height: jQuery(document).height(), width: '100%'};
+    _setupModalResizing: function() {
+        if (!Boxy.resizeConfigured) {
+            var w = jQuery(window).resize(Boxy._handleResize);
+            if (Boxy.IE6) w.scroll(Boxy._handleResize);
+            Boxy.resizeConfigured = true;
+        }
+    },
+    
+    _cssForOverlay: function() {
+        if (Boxy.IE6) {
+            return Boxy._viewport();
+        } else {
+            return {width: '100%', height: jQuery(document).height()};
+        }
     }
 
 });
@@ -434,12 +447,9 @@ Boxy.prototype = {
         if (this.visible) return;
         if (this.options.modal) {
             var self = this;
-            if (!Boxy.resizeConfigured) {
-                Boxy.resizeConfigured = true;
-                jQuery(window).resize(function() { Boxy._handleResize(); });
-            }
+            Boxy._setupModalResizing();
             this.modalBlackout = jQuery('<div class="boxy-modal-blackout"></div>')
-                .css(jQuery.extend(Boxy._documentSize(), {
+                .css(jQuery.extend(Boxy._cssForOverlay(), {
                     zIndex: Boxy._nextZ(), opacity: Boxy.MODAL_OPACITY
                 })).appendTo(document.body);
             this.toTop();
