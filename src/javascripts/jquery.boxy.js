@@ -34,6 +34,9 @@ jQuery.fn.boxy = function(options) {
                     content.remove();
                     localOptions.unloadOnHide = false;
                     new Boxy(newContent, localOptions);
+                } else if (href.match(/\.(jpe?g|png|gif|bmp)($|\?)/i)) {
+                    localOptions.unloadOnHide = true;
+                    Boxy.loadImage(this.href, localOptions);
                 } else { // fall back to AJAX; could do with a same-origin check
                     if (!localOptions.cache) localOptions.unloadOnHide = true;
                     Boxy.load(this.href, localOptions);
@@ -166,6 +169,14 @@ jQuery.extend(Boxy, {
         
         jQuery.ajax(ajax);
         
+    },
+    
+    loadImage: function(url, options) {
+        var img = new Image();
+        img.onload = function() {
+            new Boxy($('<div class="boxy-image-wrapper"/>').append(this), options);
+        }
+        img.src = url;
     },
     
     // allows you to get a handle to the containing boxy instance of any element
