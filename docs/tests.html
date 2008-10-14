@@ -14,7 +14,13 @@
       <link rel="stylesheet" href="stylesheets/boxy.css" type="text/css" />
     <!-- END per project stuff -->
     
-
+    <script type='text/javascript'>
+      function lorem(opts) {
+        new Boxy("<div style='width: 350px'>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.</div>", opts);
+        return false;
+      }
+    </script>
+    
   </head>
   <body>
     <div id='container'>
@@ -113,6 +119,19 @@
           <li>
             <a href='#' id='no-show'>Create, don't show</a> |
             <a href='#' id='no-show-now'>Show now</a>
+          </li>
+        </ul>
+        
+        <h2>Positioning</h2>
+        <ul>
+          <li>
+            <a href='#' onclick='return lorem({x: 200});'>200, DEFAULT</a>
+          </li>
+          <li>
+            <a href='#' onclick='return lorem({y: 200});'>DEFAULT, 200</a>
+          </li>
+          <li>
+            <a href='#' onclick='return lorem({center: false});'>DEFAULT, DEFAULT</a>
           </li>
         </ul>
         

@@ -91,8 +91,8 @@ function Boxy(element, options) {
         this.center();
     } else {
         this.moveTo(
-            Boxy._u(this.options.x) ? this.options.x : Boxy.DEFAULT_X,
-            Boxy._u(this.options.y) ? this.options.y : Boxy.DEFAULT_Y
+            Boxy._u(this.options.x) ? Boxy.DEFAULT_X : this.options.x,
+            Boxy._u(this.options.y) ? Boxy.DEFAULT_Y : this.options.y
         );
     }
     
