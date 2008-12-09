@@ -476,6 +476,7 @@ Boxy.prototype = {
         }
         this.boxy.stop().css({opacity: 1}).show();
         this.visible = true;
+        this.boxy.find('.close:first').focus();
         this._fire('afterShow');
         return this;
     },
