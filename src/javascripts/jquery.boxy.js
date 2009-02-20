@@ -130,7 +130,9 @@ jQuery.extend(Boxy, {
         afterDrop:              Boxy.EF,        // callback fired after dialog is dropped. executes in context of Boxy instance.
         afterShow:              Boxy.EF,        // callback fired after dialog becomes visible. executes in context of Boxy instance.
         afterHide:              Boxy.EF,        // callback fired after dialog is hidden. executed in context of Boxy instance.
-        beforeUnload:           Boxy.EF         // callback fired after dialog is unloaded. executed in context of Boxy instance.
+        beforeUnload:           Boxy.EF,        // callback fired after dialog is unloaded. executed in context of Boxy instance.
+		hideFade: 				false,
+		hideShrink: 			'vertical'
     },
     
     IE6:                (jQuery.browser.msie && jQuery.browser.version < 7),
@@ -327,7 +329,7 @@ Boxy.prototype = {
     getSize: function() {
         return [this.boxy.width(), this.boxy.height()];
     },
-    
+
     // Returns the dimensions of the content region as [width,height]
     getContentSize: function() {
         var c = this.getContent();
@@ -474,6 +476,7 @@ Boxy.prototype = {
                 });
             }
         }
+		this.getInner().stop().css({width: '', height: ''});
         this.boxy.stop().css({opacity: 1}).show();
         this.visible = true;
         this.boxy.find('.close:first').focus();
@@ -483,23 +486,56 @@ Boxy.prototype = {
     
     // Hide this boxy instance
     hide: function(after) {
-        if (!this.visible) return;
-        var self = this;
-        if (this.options.modal) {
+        
+		if (!this.visible) return;
+        
+		var self = this;
+        
+		if (this.options.modal) {
             jQuery(document.body).unbind('keypress.boxy');
             this.modalBlackout.animate({opacity: 0}, function() {
                 jQuery(this).remove();
             });
         }
-        this.boxy.stop().animate({opacity: 0}, 300, function() {
-            self.boxy.css({display: 'none'});
-            self.visible = false;
-            self._fire('afterHide');
-            if (after) after(self);
-            if (self.options.unloadOnHide) self.unload();
-        });
-        return this;
-    },
+		
+		var target = { boxy: {}, inner: {} },
+			tween = 0,
+			hideComplete = function() {
+				self.boxy.css({display: 'none'});
+				self.visible = false;
+				self._fire('afterHide');
+				if (after) after(self);
+				if (self.options.unloadOnHide) self.unload();
+			};
+		
+		if (this.options.hideShrink) {
+			var inner = this.getInner(), hs = this.options.hideShrink, pos = this.getPosition();
+			tween |= 1;
+			if (hs === true || hs == 'vertical') {
+				target.inner.height = 0;
+				target.boxy.top = pos[1] + inner.height() / 2;
+			}
+			if (hs === true || hs == 'horizontal') {
+				target.inner.width = 0;
+				target.boxy.left = pos[0] + inner.width() / 2;
+			}
+		}
+		
+		if (this.options.hideFade) {
+			tween |= 2;
+			target.boxy.opacity = 0;
+		}
+		
+		if (tween) {
+			if (tween & 1) inner.stop().animate(target.inner, 300);
+			this.boxy.stop().animate(target.boxy, 300, hideComplete);
+		} else {
+			hideComplete();
+		}
+		
+		return this;
+	
+	},
     
     toggle: function() {
         this[this.visible ? 'hide' : 'show']();

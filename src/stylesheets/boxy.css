@@ -40,7 +40,7 @@
 		
 	/* Content Region */
 	
-	.boxy-inner { background-color: white; padding: 0 }
+	.boxy-inner { overflow: hidden; background-color: white; padding: 0 }
 	.boxy-content { padding: 15px; }
 	
 	/* Question Boxes */
