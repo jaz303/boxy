@@ -108,9 +108,9 @@ Boxy.EF = function() {};
 jQuery.extend(Boxy, {
     
     WRAPPER:    "<table cellspacing='0' cellpadding='0' border='0' class='boxy-wrapper'>" +
-                "<tr><td class='top-left'></td><td class='top'></td><td class='top-right'></td></tr>" +
-                "<tr><td class='left'></td><td class='boxy-inner'></td><td class='right'></td></tr>" +
-                "<tr><td class='bottom-left'></td><td class='bottom'></td><td class='bottom-right'></td></tr>" +
+                "<tr><td class='boxy-top-left'></td><td class='boxy-top'></td><td class='boxy-top-right'></td></tr>" +
+                "<tr><td class='boxy-left'></td><td class='boxy-inner'></td><td class='boxy-right'></td></tr>" +
+                "<tr><td class='boxy-bottom-left'></td><td class='boxy-bottom'></td><td class='boxy-bottom-right'></td></tr>" +
                 "</table>",
     
     DEFAULTS: {
