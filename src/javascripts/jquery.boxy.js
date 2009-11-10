@@ -131,8 +131,8 @@ jQuery.extend(Boxy, {
         afterShow:              Boxy.EF,        // callback fired after dialog becomes visible. executes in context of Boxy instance.
         afterHide:              Boxy.EF,        // callback fired after dialog is hidden. executed in context of Boxy instance.
         beforeUnload:           Boxy.EF,        // callback fired after dialog is unloaded. executed in context of Boxy instance.
-		hideFade: 				false,
-		hideShrink: 			'vertical'
+        hideFade:               false,
+        hideShrink:             'vertical'
     },
     
     IE6:                (jQuery.browser.msie && jQuery.browser.version < 7),
@@ -177,7 +177,7 @@ jQuery.extend(Boxy, {
         var img = new Image();
         img.onload = function() {
             new Boxy($('<div class="boxy-image-wrapper"/>').append(this), options);
-        }
+        };
         img.src = url;
     },
     
@@ -225,7 +225,7 @@ jQuery.extend(Boxy, {
     
         var buttons = jQuery('<form class="answers"></form>');
         buttons.html(jQuery.map(Boxy._values(answers), function(v) {
-            return "<input type='button' value='" + v + "' />" 
+            return "<input type='button' value='" + v + "' />";
         }).join(' '));
         
         jQuery('input[type=button]', buttons).click(function() {
@@ -592,7 +592,7 @@ Boxy.prototype = {
                 tb.append(jQuery("<a href='#' class='close'></a>").html(this.options.closeText));
             }
             if (this.options.draggable) {
-                tb[0].onselectstart = function() { return false; }
+                tb[0].onselectstart = function() { return false; };
                 tb[0].unselectable = 'on';
                 tb[0].style.MozUserSelect = 'none';
                 if (!Boxy.dragConfigured) {
